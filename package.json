@@ -1,0 +1,19 @@
+{
+  "name": "nqm-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nqminds/nqm-utils"
+  },
+  "author": "toby.ealden@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nqminds/nqm-utils/issues"
+  },
+  "homepage": "https://github.com/nqminds/nqm-utils"
+}
