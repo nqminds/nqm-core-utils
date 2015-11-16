@@ -6,6 +6,6 @@ module.exports = (function() {
   "use strict";
   
   return {
-    flatten: require("./lib/flatten")
+    flattenJSON: require("./lib/flatten")
   }
 }());
