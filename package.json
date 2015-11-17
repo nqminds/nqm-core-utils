@@ -1,5 +1,5 @@
 {
-  "name": "@nqminds/nqm-utils",
+  "name": "nqm-utils",
   "version": "0.0.3",
   "description": "",
   "main": "index.js",
