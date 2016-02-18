@@ -4,7 +4,9 @@
 
 module.exports = (function() {
   "use strict";
-  
+
+  var _ = require("lodash");
+
   return {
     flattenJSON: require("./lib/flatten"),
     buildDataKey: function(fieldPaths, params) {
