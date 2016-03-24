@@ -8,6 +8,7 @@ module.exports = (function() {
   var _ = require("lodash");
 
   return {
+    loadConfig: require("./lib/loadConfig"),
     flattenJSON: require("./lib/flatten"),
     buildDataKey: function(fieldPaths, params) {
       /*
