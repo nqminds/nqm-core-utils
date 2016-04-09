@@ -6,9 +6,9 @@ module.exports = (function() {
   "use strict";
 
   return {
-    loadConfig: require("./lib/loadConfig"),
+    loadConfig: require("./lib/load-config"),
     flattenJSON: require("./lib/flatten"),
-    buildDataKey: require("./lib/buildDataKey"),
+    buildDataKey: require("./lib/build-data-key"),
     isEmailValid: function(address) { 
       // TODO - improve this (use mailgun?)
       return /^[A-Z0-9'.1234z_%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(address);
