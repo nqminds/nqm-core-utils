@@ -1,5 +1,9 @@
 {
   "name": "nqm-utils",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nqminds/nqm-utils.git"
+  },  
   "version": "0.0.4",
   "description": "",
   "main": "index.js",
