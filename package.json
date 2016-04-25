@@ -2,17 +2,13 @@
   "name": "nqm-utils",
   "repository": {
     "type": "git",
-    "url": "git://github.com/nqminds/nqm-utils.git"
-  },  
-  "version": "0.0.4",
+    "url": "https://github.com/nqminds/nqm-utils"
+  },
+  "version": "0.0.5",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nqminds/nqm-utils"
   },
   "author": "toby.ealden@gmail.com",
   "license": "ISC",
