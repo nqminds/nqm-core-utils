@@ -14,7 +14,14 @@ module.exports = (function() {
     // From http://stackoverflow.com/a/106223
     return /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/.test(hostname);
   };
-
+  
+  var isDateValid = function(d) {
+    // From http://stackoverflow.com/q/1353684 
+    if (Object.prototype.toString.call(d) !== "[object Date]")
+      return false;
+    return !isNaN(d.getTime());
+  }
+  
   return {
     loadConfig: require("./lib/load-config"),
     flattenJSON: require("./lib/flatten"),
