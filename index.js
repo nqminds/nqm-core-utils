@@ -23,6 +23,7 @@ module.exports = (function() {
   }
   
   return {
+    resourceUtils: require("./lib/resource-utils"),
     loadConfig: require("./lib/load-config"),
     flattenJSON: require("./lib/flatten"),
     buildDataKey: require("./lib/build-data-key"),
