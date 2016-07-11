@@ -28,6 +28,7 @@ module.exports = (function() {
     flattenJSON: require("./lib/flatten"),
     buildDataKey: require("./lib/build-data-key"),
     isEmailValid: isEmailValid,
+    isDateValid: isDateValid,
     isHostNameValid: isHostNameValid,
     isNumeric: function (n) { return !isNaN(parseFloat(n)) && isFinite(n); },
     makeTDXAccount: function(email, tdx) {
