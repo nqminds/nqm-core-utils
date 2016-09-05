@@ -24,6 +24,7 @@ module.exports = (function() {
   
   return {
     resourceUtils: require("./lib/resource-utils"),
+    taskUtils: require("./lib/task-utils"),
     loadConfig: require("./lib/load-config"),
     flattenJSON: require("./lib/flatten"),
     buildDataKey: require("./lib/build-data-key"),
