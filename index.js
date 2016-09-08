@@ -22,12 +22,14 @@ module.exports = (function() {
     return !isNaN(d.getTime());
   }
   
-  return {
+  var utils = {
     resourceUtils: require("./lib/resource-utils"),
     taskUtils: require("./lib/task-utils"),
     loadConfig: require("./lib/load-config"),
     flattenJSON: require("./lib/flatten"),
     buildDataKey: require("./lib/build-data-key"),
+    params: require("./lib/check-params"),
+    oauthHooks: require("./lib/oauth-hooks"),
     isEmailValid: isEmailValid,
     isDateValid: isDateValid,
     isHostNameValid: isHostNameValid,
@@ -52,5 +54,7 @@ module.exports = (function() {
       }
       return result;
     }
-  }
+  };
+
+  return utils;
 }());
