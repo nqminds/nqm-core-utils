@@ -30,6 +30,7 @@ module.exports = (function() {
     buildDataKey: require("./lib/build-data-key"),
     params: require("./lib/check-params"),
     oauthHooks: require("./lib/oauth-hooks"),
+    shortHash: require("./lib/short-hash"),
     isEmailValid: isEmailValid,
     isDateValid: isDateValid,
     isHostNameValid: isHostNameValid,
