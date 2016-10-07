@@ -25,6 +25,7 @@ module.exports = (function() {
   var utils = {
     resourceUtils: require("./lib/resource-utils"),
     databotUtils: require("./lib/databot-utils"),
+    schemaUtils: require("./lib/schema-utils"),
     loadConfig: require("./lib/load-config"),
     flattenJSON: require("./lib/flatten"),
     buildDataKey: require("./lib/build-data-key"),
