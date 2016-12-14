@@ -32,6 +32,7 @@ module.exports = (function() {
     params: require("./lib/check-params"),
     oauthHooks: require("./lib/oauth-hooks"),
     shortHash: require("./lib/short-hash"),
+    email: require("./lib/email"),
     isEmailValid: isEmailValid,
     isDateValid: isDateValid,
     isHostNameValid: isHostNameValid,
@@ -55,6 +56,16 @@ module.exports = (function() {
         };
       }
       return result;
+    },
+    parseFunction: function(funcText) {
+      var funcReg = /function *\(([^()]*)\)[ \n\t]*{(.*)}/gmi;
+      var match = funcReg.exec(funcText.replace(/\n/g, " "));
+
+      if (match) {
+        return new Function(match[1].split(","), match[2]);
+      }
+
+      return null;
     }
   };
 
