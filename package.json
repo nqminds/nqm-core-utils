@@ -1,8 +1,8 @@
 {
-  "name": "nqm-utils",
+  "name": "nqm-core-utils",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nqminds/nqm-utils"
+    "url": "https://github.com/nqminds/nqm-core-utils"
   },
   "version": "0.1.5",
   "description": "",
@@ -13,7 +13,8 @@
   "author": "toby.ealden@gmail.com",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nqminds/nqm-utils/issues"
+    "url": "https://github.com/nqminds/nqm-core-utils/issues"
   },
-  "homepage": "https://github.com/nqminds/nqm-utils"
+  "homepage": "https://github.com/nqminds/nqm-core-utils",
+  "private": true
 }
