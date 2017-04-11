@@ -29,6 +29,7 @@ module.exports = (function() {
     loadConfig: require("./lib/load-config"),
     flattenJSON: require("./lib/flatten"),
     buildDataKey: require("./lib/build-data-key"),
+    applyJSONPatch: require("./lib/apply-json-patch"),
     params: require("./lib/check-params"),
     oauthHooks: require("./lib/oauth-hooks"),
     shortHash: require("./lib/short-hash"),
