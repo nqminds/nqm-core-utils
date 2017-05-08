@@ -7,11 +7,6 @@
 	shorthash may be freely distributed under the MIT license.
 */
 
-exports.bitwise = bitwise;
-exports.binaryTransfer = binaryTransfer;
-exports.unique = unique;
-
-
 // refer to: http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
 function bitwise(str){
 	var hash = 0;
@@ -66,3 +61,11 @@ function unique (text) {
 	var id = binaryTransfer(bitwise(text), 61);
 	return id.replace('-', 'Z');
 }
+
+export default {
+  bitwise,
+  binaryTransfer,
+  unique
+};
+
+
