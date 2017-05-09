@@ -44,7 +44,7 @@ const getResourceTypeText = function(type) {
   return text;
 };
 
-export const getShareModeText = function(shareMode) {
+const getShareModeText = function(shareMode) {
   let display;
   switch (shareMode) {
     case constants.publicRWShareMode:
@@ -63,7 +63,7 @@ export const getShareModeText = function(shareMode) {
   return display;
 };
 
-export const primaryKeyFromFlattened = function(resource, datum) {
+const primaryKeyFromFlattened = function(resource, datum) {
   // Create primary key from flattened data.
   const key = {};
   _.forEach(resource.schemaDefinition.uniqueIndex, (idx) => {
