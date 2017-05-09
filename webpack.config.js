@@ -1,58 +1,58 @@
 /* global __dirname, require, module*/
 "use strict";
 
-const webpack = require('webpack');
+const webpack = require("webpack");
 const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
-const path = require('path');
-const env  = require('yargs').argv.env; // use --env with webpack 2
+const path = require("path");
+const env  = require("yargs").argv.env; // use --env with webpack 2
 
-let libraryName = 'nqm-core-utils';
+let libraryName = "nqm-core-utils";
 
 let plugins = [], outputFile;
 
-if (env === 'build') {
+if (env === "build") {
   plugins.push(new UglifyJsPlugin({ minimize: true }));
-  outputFile = libraryName + '.min.js';
+  outputFile = libraryName + ".min.js";
 } else {
-  outputFile = libraryName + '.js';
+  outputFile = libraryName + ".js";
 }
 
 const config = {
-  entry: __dirname + '/src/index.js',
-  devtool: 'source-map',
+  entry: __dirname + "/src/index.js",
+  devtool: "source-map",
   output: {
-    path: __dirname + '/lib',
+    path: __dirname + "/lib",
     filename: outputFile,
     library: libraryName,
-    libraryTarget: 'umd',
+    libraryTarget: "umd",
     umdNamedDefine: true
   },
   module: {
     rules: [
       {
         test: /(\.jsx|\.js)$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         exclude: /(node_modules|bower_components)/,
       },
       {
         test: /(\.jsx|\.js)$/,
-        loader: 'eslint-loader',
+        loader: "eslint-loader",
         exclude: /node_modules/
       }
     ]
   },
   resolve: {
-    modules: [path.resolve('./src')],
-    extensions: ['.json', '.js']
+    modules: [path.resolve("./src")],
+    extensions: [".json", ".js"]
   },
   plugins: plugins,
   externals: {
     bluebird: "bluebird",
     lodash: {
-      commonjs: 'lodash',
-      commonjs2: 'lodash',
-      amd: '_',
-      root: '_'
+      commonjs: "lodash",
+      commonjs2: "lodash",
+      amd: "_",
+      root: "_"
     },
     "mongo-parse": "mongo-parse"
   }
