@@ -57,7 +57,7 @@ const parseFunction = function(funcText) {
   return null;
 };
   
-export default {
+export {
   resourceUtils,
   databotUtils,
   schemaUtils,

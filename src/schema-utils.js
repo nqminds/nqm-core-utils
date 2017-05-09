@@ -1,5 +1,6 @@
 import Promise from "bluebird";
 import _ from "lodash";
+import log from "./debug";
 import errLog from "./debug";
 import constants from "./constants";
 
