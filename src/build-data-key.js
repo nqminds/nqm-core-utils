@@ -20,6 +20,6 @@ const buildDataKey = function(fieldPaths, params) {
   });
 
   return keys;
-}
+};
 
 export default buildDataKey;

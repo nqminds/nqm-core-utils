@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import constants from "./constants";
 import resourceUtils from "./resource-utils";
 import databotUtils from "./databot-utils";
@@ -6,7 +7,7 @@ import flattenJSON from "./flatten";
 import buildDataKey from "./build-data-key";
 import shortHash from "./short-hash";
 
-const isEmailValid = function(address) { 
+const isEmailValid = function(address) {
   // TODO - improve this (use mailgun?)
   return /^[A-Z0-9'.1234z_%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(address);
 };
@@ -17,19 +18,21 @@ const isHostNameValid = function(hostname) {
 };
 
 const isDateValid = function(d) {
-  // From http://stackoverflow.com/q/1353684 
+  // From http://stackoverflow.com/q/1353684
   if (Object.prototype.toString.call(d) !== "[object Date]")
     return false;
   return !isNaN(d.getTime());
-}
+};
 
-const isNumeric = function (n) { return !isNaN(parseFloat(n)) && isFinite(n); };
+const isNumeric = function(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+};
 
 const makeTDXAccount = function(email, tdx) {
   /*
     * tdx accounts are stored in email/hostname format, e.g. toby.ealden@gmail.com/tdx.nqminds.com
     */
-  return email + "/" + tdx;
+  return `${email}/${tdx}`;
 };
 
 const splitTDXAccount = function(username) {
@@ -41,7 +44,7 @@ const splitTDXAccount = function(username) {
   if (split.length === 2 && isEmailValid(split[0]) && (isHostNameValid(split[1]) || split[1].indexOf("localhost:") === 0)) {
     result = {
       email: split[0],
-      tdx: split[1]
+      tdx: split[1],
     };
   }
   return result;
@@ -57,7 +60,7 @@ const parseFunction = function(funcText) {
 
   return null;
 };
-  
+
 export {
   constants,
   resourceUtils,

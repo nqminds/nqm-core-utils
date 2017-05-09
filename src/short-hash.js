@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 /*
 	shorthash
 	(c) 2013 Bibig

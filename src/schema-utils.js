@@ -1,4 +1,4 @@
-import Promise from "bluebird";
+/* eslint-disable no-underscore-dangle */
 import _ from "lodash";
 import log from "./debug";
 import errLog from "./debug";
@@ -31,7 +31,7 @@ const reservedFieldNames = [
   "remove",
   // hooks.js
   "_pres",
-  "_posts"
+  "_posts",
 ];
 
 // Convert from simple array list to TDX index format.
@@ -45,13 +45,13 @@ const indexToTDX = function(indexFields, errList) {
   const tdxIndex = [];
 
   if (Array.isArray(indexFields)) {
-    _.forEach(indexFields, function(fieldSpec, idx) {
+    _.forEach(indexFields, function(fieldSpec) {
       if (typeof fieldSpec === "string") {
         tdxIndex.push({"asc": fieldSpec});
       } else if (fieldSpec.asc || fieldSpec.desc) {
         tdxIndex.push(fieldSpec);
       } else {
-        errList.push("invalid index spec: " + JSON.stringify(fieldSpec));          
+        errList.push(`invalid index spec: ${JSON.stringify(fieldSpec)}`);
       }
     });
   } else if (typeof indexFields === "object") {
@@ -71,7 +71,7 @@ const validateTDXType = function(type, errList) {
   let properType;
   type = type.toLowerCase();
   if (!constants.mongooseTypes[type]) {
-    errList.push("invalid base type: " + type);
+    errList.push(`invalid base type: ${type}`);
   } else {
     properType = type;
   }
@@ -80,7 +80,7 @@ const validateTDXType = function(type, errList) {
 
 // Converts a schema from mongoose to TDX format.
 const schemaToTDX = function(schema, errList) {
-  if (typeof schema === "object") {    
+  if (typeof schema === "object") {
     _.forEach(schema, function(value, key) {
       if (key === "__tdxType") {
         // Ensure array type list.
@@ -105,7 +105,7 @@ const schemaToTDX = function(schema, errList) {
       } else if (typeof value === "string") {
         schema[key] = {__tdxType: [validateTDXType(value, errList)]};
       } else {
-        errList.push("invalid schema definition, unexpected: " + schema);
+        errList.push(`invalid schema definition, unexpected: ${schema}`);
       }
     });
 
@@ -113,7 +113,7 @@ const schemaToTDX = function(schema, errList) {
   } else if (typeof schema === "string") {
     return {__tdxType: [validateTDXType(schema, errList)]};
   } else {
-    errList.push("invalid schema definition, unexpected: " + schema);
+    errList.push(`invalid schema definition, unexpected: ${schema}`);
   }
 };
 
@@ -121,7 +121,7 @@ const validateMongooseType = function(type, errList) {
   let properType;
   type = type.toLowerCase();
   if (!constants.mongooseTypes[type]) {
-    errList.push("invalid base type: " + type);
+    errList.push(`invalid base type: ${type}`);
   } else {
     properType = _.capitalize(type);
   }
@@ -134,7 +134,7 @@ const schemaToMongoose = function(schema, errList) {
   _.each(schema, function(v, k) {
     if (reservedFieldNames.indexOf(k) >= 0) {
       errLog("invalid field name (reserved): %s", k);
-      errList.push("invalid field name (reserved): " + k);
+      errList.push(`invalid field name (reserved): ${k}`);
     } else if (k === "__tdxRequired") {
       schema.required = schema.__tdxRequired;
       delete schema.__tdxRequired;
@@ -166,7 +166,7 @@ const schemaToMongoose = function(schema, errList) {
     } else if (Array.isArray(v)) {
       // Array
       if (v.length > 1) {
-        errList.push("invalid array type specification for key: " + k);
+        errList.push(`invalid array type specification for key: ${k}`);
       } else if (v.length > 0) {
         if (typeof v[0] === "string") {
           schema[k] = {type: validateMongooseType(v[0], errList)};
@@ -182,7 +182,7 @@ const schemaToMongoose = function(schema, errList) {
       // Don't treat this as an error, just ignore.
       // Seems to be caused be some legacy schema definitions with { default: true, required: true } etc.
       // errList.push("invalid schema definition - unexpected type for key '" + k + "': " + (typeof v));
-      errLog("invalid schema definition - unexpected type for key '" + k + "': " + (typeof v));
+      errLog(`invalid schema definition - unexpected type for key '${k}' : ${(typeof v)}`);
       delete schema[k];
     } else {
       schema[k] = {type: validateMongooseType(v, errList)};
@@ -196,20 +196,20 @@ const definitionToMongoose = function(name, tdxSchema) {
   const uniqueIndex = tdxSchema.uniqueIndex;
   const indexes = tdxSchema.nonUniqueIndexes;
 
-  // Convert any given indexes to mongodb format 
+  // Convert any given indexes to mongodb format
   //
   // Because these dynamic schema definitions are stored in mongodb as documents,
   // we have to store them in a backwards fashion as mongodb does not allow
   // key names to contain periods. For example, if the index was saved
   // as { "address.postcode": 1 } mongodb would complain about "address.postcode".
-  //     
+  //
   // So we store indexes (which are likely to contain dots e.g. if indexing
   // on nested document) in the form:
   //
   // { "asc": "my.nested.key" } or { "desc": "address.postcode" }
-  //q
+  //
   // Here we convert this stored format to mongodb format so the index can be created.
-  // 
+  //
   // The 'indexes' parameter should be an array of arrays of index specifiers, e.g.
   // the following specifies two indexes, one is a compound index on account and order,
   // the other is an individual index on completedAt:
@@ -227,7 +227,7 @@ const definitionToMongoose = function(name, tdxSchema) {
       _.forEach(nonUniqueIndex, function(i) {
         index[i.asc || i.desc] = (i.asc ? 1 : -1);
       });
-      nonUniqueIndexes.push(index);        
+      nonUniqueIndexes.push(index);
     }
   });
   log("translated non unique indexes for %s from %j to %j", name, indexes, nonUniqueIndexes);
@@ -243,16 +243,16 @@ const definitionToMongoose = function(name, tdxSchema) {
     primaryIndex[i.asc || i.desc] = (i.asc ? 1 : -1);
   });
   log("translated primary index for %s from %j to %j", name, uniqueIndex, primaryIndex);
-      
+
   //
   // Remove all index information from the schema, as we set the indexes
   // manually below.
-  //        
+  //
   log("transforming schema for %s: %j", tdxSchema.id, tdxSchema.dataSchema);
   const errList = [];
   const mongooseSchema = schemaToMongoose(tdxSchema.dataSchema, errList);
   if (errList.length) {
-    throw new Error("invalid mongoose schema: " + errList.join(","));
+    throw new Error(`invalid mongoose schema: ${errList.join(",")}`);
   }
 
   log("schema transformed to %j", mongooseSchema);
@@ -260,9 +260,9 @@ const definitionToMongoose = function(name, tdxSchema) {
   return {
     schema: mongooseSchema,
     uniqueIndex: primaryIndex,
-    nonUniqueIndexes: nonUniqueIndexes
+    nonUniqueIndexes: nonUniqueIndexes,
   };
-}
+};
 
 export default {
   definitionToMongoose: definitionToMongoose,
@@ -272,5 +272,5 @@ export default {
   schemaToTDX: function(mongooseSchema, errList) {
     return schemaToTDX(_.cloneDeep(mongooseSchema), errList);
   },
-  indexToTDX: indexToTDX
-}
+  indexToTDX: indexToTDX,
+};

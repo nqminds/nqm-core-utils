@@ -1,3 +1,4 @@
+/* eslint-disable key-spacing, max-len */
 export default {
   // Resource access types
   readAccess:  "r",

@@ -3,7 +3,7 @@ import constants from "./constants";
 const isResourceType = function(resource, type) {
   return (
     resource.schemaDefinition ?
-    (resource.schemaDefinition.id === type || (resource.schemaDefinition.basedOn && resource.schemaDefinition.basedOn.indexOf(type) >= 0)) :
+    (resource.schemaDefinition.id === type || (resource.schemaDefinition.basedOn && resource.schemaDefinition.basedOn.indexOf(type) >= 0)) :  // eslint-disable-line max-len
     resource.baseType === type
   );
 };
@@ -38,12 +38,13 @@ const getResourceTypeText = function(type) {
     default:
       // Most single word resource types are OK.
       text = type;
-      break;        
+      break;
   }
   return text;
 };
 
 export default {
   isResourceType: isResourceType,
-  getResourceTypeText: getResourceTypeText
-}
+  getResourceTypeText: getResourceTypeText,
+};
+
