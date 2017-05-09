@@ -7,8 +7,6 @@ import _ from "lodash";
   * where paths use the dot notation, e.g. address.postcode.
   */
 const buildDataKey = function(fieldPaths, params) {
-  const _ = require("lodash");
-
   const keys = {};
   _.forEach(fieldPaths, function(f) {
     // Get the field path.
