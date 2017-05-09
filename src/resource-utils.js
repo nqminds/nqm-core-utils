@@ -76,8 +76,8 @@ const primaryKeyFromFlattened = function(resource, datum) {
 
 export default {
   getResourceTypeText: getResourceTypeText,
-  getShareModeText,
+  getShareModeText: getShareModeText,
   isResourceType: isResourceType,
-  primaryKeyFromFlattened,
+  primaryKeyFromFlattened: primaryKeyFromFlattened,
 };
 
