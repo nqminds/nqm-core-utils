@@ -1,4 +1,5 @@
 import constants from "./constants";
+import _ from "lodash";
 
 const isResourceType = function(resource, type) {
   return (
@@ -43,8 +44,40 @@ const getResourceTypeText = function(type) {
   return text;
 };
 
+export const getShareModeText = function(shareMode) {
+  let display;
+  switch (shareMode) {
+    case constants.publicRWShareMode:
+      display = "public view and edit";
+      break;
+    case constants.publicROShareMode:
+      display = "public view, trusted edit";
+      break;
+    case constants.trustedShareMode:
+      display = "trusted only";
+      break;
+    default:
+      display = "!!unknown!!";
+      break;
+  }
+  return display;
+};
+
+export const primaryKeyFromFlattened = function(resource, datum) {
+  // Create primary key from flattened data.
+  const key = {};
+  _.forEach(resource.schemaDefinition.uniqueIndex, (idx) => {
+    const keyField = idx.asc || idx.desc;
+    key[keyField] = datum[keyField];
+  });
+
+  return key;
+};
+
 export default {
-  isResourceType: isResourceType,
   getResourceTypeText: getResourceTypeText,
+  getShareModeText,
+  isResourceType: isResourceType,
+  primaryKeyFromFlattened,
 };
 
