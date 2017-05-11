@@ -2,6 +2,13 @@ import constants from "./constants";
 import _ from "lodash";
 import shortHash from "./short-hash";
 
+// A 'pure' resource is any non-databot and non-application resource.
+const pureResourceTypes = [
+  constants.databotBaseType,
+  constants.groupResourceType,
+  constants.rawFileResourceType,
+];
+
 const isResourceType = function(resource, type) {
   return (
     resource.schemaDefinition ?
@@ -115,7 +122,7 @@ const getDefaultResourceParent = function(accountId, baseType) {
 };
 
 const isPureResource = function(baseType) {
-  return baseType;
+  return pureResourceTypes.indexOf(baseType) >= 0;
 };
 
 export default {
