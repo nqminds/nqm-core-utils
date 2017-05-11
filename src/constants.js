@@ -22,35 +22,44 @@ export default {
   },
 
   // Resource types (schema ids)
-  rootGroupResourceType:               "rootGroup",
-  schemaResourceType:                  "schema",
-  datasetResourceType:                 "dataset",
-  visualisationResourceType:           "visualisation",
-  groupResourceType:                   "resourceGroup",
-  rawFileResourceType:                 "rawFile",
-  vocabularyResourceType:              "vocabulary",
-  widgetVisualisationResourceType:     "widgetVisualisation",
-  timeSeriesVisualisationResourceType: "timeSeriesVisualisation",
-  mapVisualisationResourceType:        "mapVisualisation",
-  statusVisualisationResourceType:     "statusVisualisation",
-  databotBaseType:                     "databot",                   // base of all things 'databot'
-  databotResourceType:                 "databotDefinition",         // a databot definition
-  databotInstancesResourceType:        "databotInstances",          // system resource storing details of running databot instances
-  databotInstanceOutputResourceType:   "databotInstanceOutput",     // system resource storing databot instance output
-  databotProcessesResourceType:        "databotProcesses",          // system resource storing databot process info
-  activeDatabotHostsResourceType:      "activeDatabotHosts",        // system resource storing details of active databot hosts
-  databotHostResourceType:             "databotHost",               // system resources that mirror hostAccountType accounts to enable sharing
-  databotGroupResourceType:            "databotGroup",
-  databotHostGroupResourceType:        "databotHostGroup",
-  databotControllerResourceType:       "databotController",
-  datasetFilterResourceType:           "datasetFilter",
-  applicationBaseType:                 "applicationBase",
-  applicationResourceType:             "application",
-  applicationGroupResourceType:        "applicationGroup",
-  applicationDataGroupResourceType:    "applicationDataGroup",
-  scratchGroupResourceType:            "scratchGroup",
-  rootResourceGroupResourceType:       "rootResourceGroup",
-  geojsonResourceType:                 "geojson",
+  vocabularyResourceType:                 "vocabulary",
+  schemaResourceType:                     "schema",
+  datasetResourceType:                    "dataset",
+  visualisationResourceType:              "visualisation",
+  groupResourceType:                      "resourceGroup",
+  rootGroupResourceType:                  "rootGroup",                 // user root folder - holds all account resources
+  rawFileResourceType:                    "rawFile",
+  datasetFilterResourceType:              "datasetFilter",
+  widgetVisualisationResourceType:        "widgetVisualisation",
+  timeSeriesVisualisationResourceType:    "timeSeriesVisualisation",
+  mapVisualisationResourceType:           "mapVisualisation",
+  statusVisualisationResourceType:        "statusVisualisation",
+
+  databotBaseType:                        "databot",                   // base of all things 'databot'
+  databotDefinitionResourceType:          "databotDefinition",         // a databot definition
+  databotInstancesResourceType:           "databotInstances",          // system resource storing details of running databot instances
+  databotInstanceOutputResourceType:      "databotInstanceOutput",     // system resource storing databot instance output
+  databotProcessesResourceType:           "databotProcesses",          // system resource storing databot process info
+  activeDatabotHostsResourceType:         "activeDatabotHosts",        // system resource storing details of active databot hosts
+  databotHostResourceType:                "databotHost",               // system resources that mirror hostAccountType accounts to enable sharing
+  databotControllerResourceType:          "databotController",
+
+  databotRootGroupResourceType:           "databotRootGroup",
+  databotDefinitionGroupResourceType:     "databotGroup",
+  databotHostGroupResourceType:           "databotHostGroup",
+  databotInstanceGroupResourceType:       "databotInstanceGroup",
+
+  applicationBaseType:                    "applicationBase",
+  applicationDefinitionResourceType:      "applicationDefinition",     // system resources that mirror applicationAccountType accounts to enable sharing
+
+  applicationGroupResourceType:           "applicationGroup",
+  applicationDefinitionGroupResourceType: "applicationDefinitionGroup",
+  applicationServerGroupResourceType:     "applicationServerGroup",
+  applicationDataGroupResourceType:       "applicationDataGroup",
+
+  scratchGroupResourceType:               "scratchGroup",
+  resourceRootGroupResourceType:          "resourceRootGroup",
+  geojsonResourceType:                    "geojson",
 
   // Account types
   userAccountType:  "user",
@@ -136,20 +145,41 @@ export default {
   scratchFolderName: "scratch",
   scratchFolderAlias: "__scratch__",      // Used in code to refer to the current users scratch folder.
 
-  resourceFolderPrefix: "rs.",
-  resourceFolderName: "resources",
+  resourceRootFolderPrefix: "rs.",
+  resourceRootFolderName: "resources",
 
-  applicationFolderPrefix: "a.",
-  applicationFolderName: "applications",
+  applicationRootFolderPrefix: "a.",
+  applicationRootFolderName: "applications",
+
+  applicationDefinitionFolderPrefix: "adef.",
+  applicationDefinitionFolderName: "application definitions",
+
+  applicationServerFolderPrefix: "as.",
+  applicationServerFolderName: "application servers",
 
   applicationDataFolderPrefix: "ad.",
   applicationDataFolderName: "application data",
 
-  databotFolderPrefix: "db.",
-  databotFolderName: "databots",
+  databotRootFolderPrefix: "dbr.",
+  databotRootFolderName: "databots",
+
+  databotDefinitionFolderPrefix: "db.",
+  databotDefinitionFolderName: "databot definitions",
 
   databotHostFolderPrefix: "dh.",
   databotHostFolderName: "databot hosts",
 
+  databotInstanceFolderPrefix: "dbi.",
+  databotInstanceFolderName: "databot instances",
+
+  // Application data ownership modes
+  userOwnershipMode: "user",
+  appOwnershipMode: "application",
+
+  // Application data access modes
+  impersonateAccessMode: "impersonate",
+  shareAccessMode: "shared",
+
+  // Identity filter placeholder
   identityFilterPlaceholder: "@@_identity_@@",
 };

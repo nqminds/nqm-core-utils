@@ -1,5 +1,6 @@
 import constants from "./constants";
 import _ from "lodash";
+import shortHash from "./short-hash";
 
 const isResourceType = function(resource, type) {
   return (
@@ -74,9 +75,58 @@ const primaryKeyFromFlattened = function(resource, datum) {
   return key;
 };
 
+const getAccountRootId = function(accountId) {
+  return shortHash.unique(constants.rootFolderPrefix + accountId);
+};
+
+const getResourceRootId = function(accountId) {
+  return shortHash.unique(constants.resourceRootFolderPrefix + accountId);
+};
+
+const getApplicationRootId = function(accountId) {
+  return shortHash.unique(constants.applicationRootFolderPrefix + accountId);
+};
+
+const getDatabotRootId = function(accountId) {
+  return shortHash.unique(constants.databotRootFolderPrefix + accountId);
+};
+
+//
+// Gets the default parent for a given resource type.
+// This is used when a resource is created with no parent specified.
+//
+const getDefaultResourceParent = function(accountId, baseType) {
+  let rootId;
+  switch (baseType) {
+    case constants.datasetResourceType:
+      rootId = getResourceRootId(accountId);
+      break;
+    case constants.applicationBaseType:
+      rootId = getApplicationRootId(accountId);
+      break;
+    case constants.databotBaseType:
+      rootId = getDatabotRootId(accountId);
+      break;
+    default:
+      // Do nothing
+      break;
+  }
+  return rootId;
+};
+
+const isPureResource = function(baseType) {
+  return baseType;
+};
+
 export default {
+  getAccountRootId: getAccountRootId,
+  getApplicationRootId: getApplicationRootId,
+  getDatabotRootId: getDatabotRootId,
+  getDefaultResourceParent: getDefaultResourceParent,
+  getResourceRootId: getResourceRootId,
   getResourceTypeText: getResourceTypeText,
   getShareModeText: getShareModeText,
+  isPureResource: isPureResource,
   isResourceType: isResourceType,
   primaryKeyFromFlattened: primaryKeyFromFlattened,
 };
