@@ -184,5 +184,5 @@ export default {
   identityFilterPlaceholder: "@@_identity_@@",
 
   // Application ids
-  toolboxApplicationid: "__toolbox__",
+  toolboxApplicationId: "__toolbox__",
 };
