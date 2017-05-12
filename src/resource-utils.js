@@ -83,19 +83,23 @@ const primaryKeyFromFlattened = function(resource, datum) {
 };
 
 const getAccountRootId = function(accountId) {
-  return shortHash.unique(constants.rootFolderPrefix + accountId);
+  return specialFolderId(constants.rootFolderPrefix, accountId);
 };
 
 const getResourceRootId = function(accountId) {
-  return shortHash.unique(constants.resourceRootFolderPrefix + accountId);
+  return specialFolderId(constants.resourceRootFolderPrefix, accountId);
 };
 
 const getApplicationRootId = function(accountId) {
-  return shortHash.unique(constants.applicationRootFolderPrefix + accountId);
+  return specialFolderId(constants.applicationRootFolderPrefix, accountId);
+};
+
+const getApplicationDataFolderId = function(accountId) {
+  return specialFolderId(constants.applicationDataFolderPrefix, accountId);
 };
 
 const getDatabotRootId = function(accountId) {
-  return shortHash.unique(constants.databotRootFolderPrefix + accountId);
+  return specialFolderId(constants.databotRootFolderPrefix, accountId);
 };
 
 //
@@ -125,10 +129,15 @@ const isPureResource = function(baseType) {
   return pureResourceTypes.indexOf(baseType) >= 0;
 };
 
+const specialFolderId = function(prefix, accountId) {
+  return shortHash.unique(prefix + accountId);
+};
+
 export default {
   getAccountRootId: getAccountRootId,
   getApplicationRootId: getApplicationRootId,
   getDatabotRootId: getDatabotRootId,
+  getApplicationDataFolderId: getApplicationDataFolderId,
   getDefaultResourceParent: getDefaultResourceParent,
   getResourceRootId: getResourceRootId,
   getResourceTypeText: getResourceTypeText,
@@ -136,5 +145,6 @@ export default {
   isPureResource: isPureResource,
   isResourceType: isResourceType,
   primaryKeyFromFlattened: primaryKeyFromFlattened,
+  specialFolderId: specialFolderId,
 };
 

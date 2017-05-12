@@ -50,9 +50,9 @@ export default {
   databotInstanceGroupResourceType:       "databotInstanceGroup",
 
   applicationBaseType:                    "applicationBase",
-  applicationDefinitionResourceType:      "applicationDefinition",     // system resources that mirror applicationAccountType accounts to enable sharing
+  applicationDefinitionResourceType:      "applicationDefinition",      // system resources that mirror applicationAccountType accounts to enable sharing
 
-  applicationGroupResourceType:           "applicationGroup",
+  applicationRootGroupResourceType:       "applicationRootGroup",
   applicationDefinitionGroupResourceType: "applicationDefinitionGroup",
   applicationServerGroupResourceType:     "applicationServerGroup",
   applicationDataGroupResourceType:       "applicationDataGroup",
@@ -182,4 +182,7 @@ export default {
 
   // Identity filter placeholder
   identityFilterPlaceholder: "@@_identity_@@",
+
+  // Application ids
+  toolboxApplicationid: "__toolbox__",
 };
