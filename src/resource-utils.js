@@ -94,7 +94,11 @@ const getApplicationRootId = function(accountId) {
   return specialFolderId(constants.applicationRootFolderPrefix, accountId);
 };
 
-const getApplicationDataFolderId = function(accountId) {
+const getApplicationDefinitionId = function(accountId) {
+  return specialFolderId(constants.applicationDefinitionFolderPrefix, accountId);
+};
+
+const getApplicationDataId = function(accountId) {
   return specialFolderId(constants.applicationDataFolderPrefix, accountId);
 };
 
@@ -137,7 +141,8 @@ export default {
   getAccountRootId: getAccountRootId,
   getApplicationRootId: getApplicationRootId,
   getDatabotRootId: getDatabotRootId,
-  getApplicationDataFolderId: getApplicationDataFolderId,
+  getApplicationDataId: getApplicationDataId,
+  getApplicationDefinitionId: getApplicationDefinitionId,
   getDefaultResourceParent: getDefaultResourceParent,
   getResourceRootId: getResourceRootId,
   getResourceTypeText: getResourceTypeText,

@@ -26,40 +26,41 @@ export default {
   schemaResourceType:                     "schema",
   datasetResourceType:                    "dataset",
   visualisationResourceType:              "visualisation",
-  groupResourceType:                      "resourceGroup",
+  groupResourceType:                      "resourceGroup",             // generic folder
   rootGroupResourceType:                  "rootGroup",                 // user root folder - holds all account resources
   rawFileResourceType:                    "rawFile",
+  applicationBaseType:                    "applicationBase",
+  applicationDefinitionResourceType:      "applicationDefinition",      // system resources that mirror applicationAccountType accounts to enable sharing
+  databotBaseType:                        "databot",                   // base of all things 'databot'
+  databotDefinitionResourceType:          "databotDefinition",         // a databot definition
+  databotHostResourceType:                "databotHost",               // system resources that mirror hostAccountType accounts to enable sharing
+
+  resourceRootGroupResourceType:          "resourceRootGroup",         // folder for all 'pure' resources (non-databot or application)
+  scratchGroupResourceType:               "scratchGroup",
   datasetFilterResourceType:              "datasetFilter",
+  geojsonResourceType:                    "geojson",
+
   widgetVisualisationResourceType:        "widgetVisualisation",
   timeSeriesVisualisationResourceType:    "timeSeriesVisualisation",
   mapVisualisationResourceType:           "mapVisualisation",
   statusVisualisationResourceType:        "statusVisualisation",
 
-  databotBaseType:                        "databot",                   // base of all things 'databot'
-  databotDefinitionResourceType:          "databotDefinition",         // a databot definition
-  databotInstancesResourceType:           "databotInstances",          // system resource storing details of running databot instances
-  databotInstanceOutputResourceType:      "databotInstanceOutput",     // system resource storing databot instance output
-  databotProcessesResourceType:           "databotProcesses",          // system resource storing databot process info
-  activeDatabotHostsResourceType:         "activeDatabotHosts",        // system resource storing details of active databot hosts
-  databotHostResourceType:                "databotHost",               // system resources that mirror hostAccountType accounts to enable sharing
-  databotControllerResourceType:          "databotController",
-
   databotRootGroupResourceType:           "databotRootGroup",
   databotDefinitionGroupResourceType:     "databotGroup",
   databotHostGroupResourceType:           "databotHostGroup",
   databotInstanceGroupResourceType:       "databotInstanceGroup",
-
-  applicationBaseType:                    "applicationBase",
-  applicationDefinitionResourceType:      "applicationDefinition",      // system resources that mirror applicationAccountType accounts to enable sharing
+  databotControllerResourceType:          "databotController",
 
   applicationRootGroupResourceType:       "applicationRootGroup",
   applicationDefinitionGroupResourceType: "applicationDefinitionGroup",
   applicationServerGroupResourceType:     "applicationServerGroup",
   applicationDataGroupResourceType:       "applicationDataGroup",
 
-  scratchGroupResourceType:               "scratchGroup",
-  resourceRootGroupResourceType:          "resourceRootGroup",
-  geojsonResourceType:                    "geojson",
+  // databot management resources
+  databotInstancesResourceType:           "databotInstances",          // system resource storing details of running databot instances
+  databotInstanceOutputResourceType:      "databotInstanceOutput",     // system resource storing databot instance output
+  databotProcessesResourceType:           "databotProcesses",          // system resource storing databot process info
+  activeDatabotHostsResourceType:         "activeDatabotHosts",        // system resource storing details of active databot hosts
 
   // Account types
   userAccountType:  "user",
