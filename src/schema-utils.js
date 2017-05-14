@@ -169,7 +169,7 @@ const schemaToMongoose = function(schema, errList) {
         errList.push(`invalid array type specification for key: ${k}`);
       } else if (v.length > 0) {
         if (typeof v[0] === "string") {
-          schema[k] = {type: validateMongooseType(v[0], errList)};
+          schema[k] = [{type: validateMongooseType(v[0], errList)}];
         } else {
           schema[k] = [schemaToMongoose(v[0], errList)];
         }
