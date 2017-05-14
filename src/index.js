@@ -61,14 +61,14 @@ const parseFunction = function(funcText) {
   return null;
 };
 
-export {
+export default {
   constants,
   resourceUtils,
   databotUtils,
   schemaUtils,
   flattenJSON,
   buildDataKey,
-  shortHash,
+  shortHash: shortHash.unique,
   isEmailValid,
   isDateValid,
   isHostNameValid,
