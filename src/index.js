@@ -5,7 +5,7 @@ import databotUtils from "./databot-utils";
 import schemaUtils from "./schema-utils";
 import flattenJSON from "./flatten";
 import buildDataKey from "./build-data-key";
-import shortHash from "./short-hash";
+import {unique} from "./short-hash";
 
 const isEmailValid = function(address) {
   // TODO - improve this (use mailgun?)
@@ -61,14 +61,13 @@ const parseFunction = function(funcText) {
   return null;
 };
 
-export default {
+export {
   constants,
   resourceUtils,
   databotUtils,
   schemaUtils,
   flattenJSON,
   buildDataKey,
-  shortHash: shortHash.unique,
   isEmailValid,
   isDateValid,
   isHostNameValid,
@@ -76,4 +75,5 @@ export default {
   makeTDXAccount,
   splitTDXAccount,
   parseFunction,
+  unique as shortHash,
 };
