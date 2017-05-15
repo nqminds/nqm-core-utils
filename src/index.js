@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+import {generate} from "shortid";
 import constants from "./constants";
 import resourceUtils from "./resource-utils";
 import databotUtils from "./databot-utils";
@@ -80,6 +81,7 @@ export {
   isNumeric,
   makeTDXAccount,
   padNumber,
+  generate as shortId,
   splitTDXAccount,
   parseFunction,
   unique as shortHash,

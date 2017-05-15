@@ -55,7 +55,8 @@ const config = {
       amd: "_",
       root: "_"
     },
-    "mongo-parse": "mongo-parse"
+    "mongo-parse": "mongo-parse",
+    shortid: "shortid"
   }
 };
 
