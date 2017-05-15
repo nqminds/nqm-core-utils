@@ -1,6 +1,8 @@
-import errLog from "./debug";
+import debug from "debug";
 import parser from "mongo-parse";
 import _ from "lodash";
+
+const errLog = debug("nqm-core-utils:build-data-key");
 
 /*
   * Extract a dictionary of values from params corresponding to the given array of field paths,

@@ -48,6 +48,7 @@ const config = {
   plugins: plugins,
   externals: {
     bluebird: "bluebird",
+    debug: "debug",
     lodash: {
       commonjs: "lodash",
       commonjs2: "lodash",

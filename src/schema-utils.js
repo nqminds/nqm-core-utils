@@ -1,8 +1,10 @@
 /* eslint-disable no-underscore-dangle */
+import debug from "debug";
 import _ from "lodash";
-import log from "./debug";
-import errLog from "./debug";
 import constants from "./constants";
+
+const log = debug("nqm-core-utils:build-data-key");
+const errLog = debug("nqm-core-utils:build-data-key:error");
 
 // From mongoose/lib/schema.js
 const reservedFieldNames = [
