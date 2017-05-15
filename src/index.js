@@ -35,6 +35,12 @@ const makeTDXAccount = function(email, tdx) {
   return `${email}/${tdx}`;
 };
 
+const padNumber = function(n, width, z) {
+  z = z || "0";
+  n = `${n}`;
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+};
+
 const splitTDXAccount = function(username) {
   /*
     * tdx accounts are stored in email/hostname format, e.g. toby.ealden@gmail.com/tdx.nqminds.com
@@ -73,6 +79,7 @@ export {
   isHostNameValid,
   isNumeric,
   makeTDXAccount,
+  padNumber,
   splitTDXAccount,
   parseFunction,
   unique as shortHash,
