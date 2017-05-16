@@ -161,6 +161,11 @@ export default {
   applicationDataFolderPrefix: "ad.",
   applicationDataFolderName: "application data",
 
+  // For application-specific folders where app servers can store data.
+  // Created as sub-folders of applicationServerFolderPrefix.
+  // Will use the application name, e.g. "careshare server data".
+  applicationServerDataFolderPrefix: "adat.",
+
   databotRootFolderPrefix: "dbr.",
   databotRootFolderName: "databots",
 

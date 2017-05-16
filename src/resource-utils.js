@@ -82,26 +82,32 @@ const primaryKeyFromFlattened = function(resource, datum) {
   return key;
 };
 
+// Users root folder.
 const getAccountRootId = function(accountId) {
   return specialFolderId(constants.rootFolderPrefix, accountId);
 };
 
+// Folder containing all 'pure' resources belonging to the user.
 const getResourceRootId = function(accountId) {
   return specialFolderId(constants.resourceRootFolderPrefix, accountId);
 };
 
+// Folder containing all application-specific data for the user.
 const getApplicationRootId = function(accountId) {
   return specialFolderId(constants.applicationRootFolderPrefix, accountId);
 };
 
+// Folder containing application definitions created by the user.
 const getApplicationDefinitionId = function(accountId) {
   return specialFolderId(constants.applicationDefinitionFolderPrefix, accountId);
 };
 
+// Folder containing a users application data.
 const getApplicationDataId = function(accountId) {
   return specialFolderId(constants.applicationDataFolderPrefix, accountId);
 };
 
+// Folder containing all databot-specific data for the user.
 const getDatabotRootId = function(accountId) {
   return specialFolderId(constants.databotRootFolderPrefix, accountId);
 };
