@@ -190,5 +190,6 @@ export default {
   identityFilterPlaceholder: "@@_identity_@@",
 
   // Application ids
+  authenticateApplicationId: "__authenticate__",
   toolboxApplicationId: "__toolbox__",
 };
