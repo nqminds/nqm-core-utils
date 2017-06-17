@@ -4,7 +4,7 @@ import shortHash from "./short-hash";
 
 // A 'pure' resource is any non-databot and non-application resource.
 const pureResourceTypes = [
-  constants.databotBaseType,
+  constants.datasetResourceType,
   constants.groupResourceType,
   constants.rawFileResourceType,
 ];

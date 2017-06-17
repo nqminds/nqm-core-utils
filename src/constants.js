@@ -30,7 +30,7 @@ export default {
   rootGroupResourceType:                  "rootGroup",                 // user root folder - holds all account resources
   rawFileResourceType:                    "rawFile",
   applicationBaseType:                    "applicationBase",
-  applicationDefinitionResourceType:      "applicationDefinition",      // system resources that mirror applicationAccountType accounts to enable sharing
+  applicationDefinitionResourceType:      "applicationDefinition",     // system resources that mirror applicationAccountType accounts to enable sharing
   databotBaseType:                        "databot",                   // base of all things 'databot'
   databotDefinitionResourceType:          "databotDefinition",         // a databot definition
   databotHostResourceType:                "databotHost",               // system resources that mirror hostAccountType accounts to enable sharing
