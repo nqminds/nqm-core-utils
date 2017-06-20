@@ -130,7 +130,7 @@ const validateMongooseType = function(type, errList) {
   return properType;
 };
 
-const schemaToMongoose = function(schema, errList) {
+const schemaToMongoose = function(schema, errList, forDisplay) {
   errList = errList || [];
 
   _.each(schema, function(v, k) {
@@ -144,6 +144,10 @@ const schemaToMongoose = function(schema, errList) {
       schema.default = schema.__tdxDefault;
       delete schema.__tdxDefault;
     } else if (k === "__tdxDescription") {
+      if (forDisplay) {
+        // Include the description if for display
+        schema.description = schema.__tdxDescription;
+      }
       // Remove this as it's TDX documentation.
       delete schema.__tdxDescription;
     } else if (k === "__tdxType") {
