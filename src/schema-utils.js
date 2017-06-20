@@ -177,12 +177,12 @@ const schemaToMongoose = function(schema, errList, forDisplay) {
         if (typeof v[0] === "string") {
           schema[k] = [{type: validateMongooseType(v[0], errList)}];
         } else {
-          schema[k] = [schemaToMongoose(v[0], errList)];
+          schema[k] = [schemaToMongoose(v[0], errList, forDisplay)];
         }
       }
     } else if (typeof v === "object") {
       // Sub-document
-      schema[k] = schemaToMongoose(v, errList);
+      schema[k] = schemaToMongoose(v, errList, forDisplay);
     } else if (typeof v !== "string") {
       // TODO - review
       // Don't treat this as an error, just ignore.
@@ -256,7 +256,7 @@ const definitionToMongoose = function(name, tdxSchema) {
   //
   log("transforming schema for %s: %j", tdxSchema.id, tdxSchema.dataSchema);
   const errList = [];
-  const mongooseSchema = schemaToMongoose(tdxSchema.dataSchema, errList);
+  const mongooseSchema = schemaToMongoose(tdxSchema.dataSchema, errList, false);
   if (errList.length) {
     throw new Error(`invalid mongoose schema: ${errList.join(",")}`);
   }
@@ -272,8 +272,8 @@ const definitionToMongoose = function(name, tdxSchema) {
 
 export default {
   definitionToMongoose: definitionToMongoose,
-  schemaToMongoose: function(tdxSchema, errList) {
-    return schemaToMongoose(_.cloneDeep(tdxSchema), errList);
+  schemaToMongoose: function(tdxSchema, errList, forDisplay) {
+    return schemaToMongoose(_.cloneDeep(tdxSchema), errList, forDisplay);
   },
   schemaToTDX: function(mongooseSchema, errList) {
     return schemaToTDX(_.cloneDeep(mongooseSchema), errList);
