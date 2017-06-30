@@ -3,7 +3,6 @@ export default {
   // Resource access types
   readAccess:  "r",
   writeAccess: "w",
-  executeAccess: "x",
 
   // Share modes
   publicRWShareMode: "pw",    // public read and write
