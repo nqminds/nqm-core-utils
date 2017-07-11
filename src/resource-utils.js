@@ -10,6 +10,7 @@ const pureResourceTypes = [
 ];
 
 const isResourceType = function(resource, type) {
+  resource = resource || {};
   return (
     resource.schemaDefinition ?
     (resource.schemaDefinition.id === type || (resource.schemaDefinition.basedOn && resource.schemaDefinition.basedOn.indexOf(type) >= 0)) :  // eslint-disable-line max-len
