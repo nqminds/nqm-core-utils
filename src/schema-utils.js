@@ -69,6 +69,15 @@ const indexToTDX = function(indexFields, errList) {
   return tdxIndex;
 };
 
+const indexToMongoose = function(index) {
+  const mongooseIndex = {};
+  _.forEach(index, function(i) {
+    mongooseIndex[i.asc || i.desc] = (i.asc ? 1 : -1);
+  });
+
+  return mongooseIndex;
+};
+
 const validateTDXType = function(type, errList) {
   let properType;
   type = type.toLowerCase();
@@ -261,11 +270,7 @@ const definitionToMongoose = function(name, tdxSchema) {
   const nonUniqueIndexes = [];
   _.forEach(indexes, function(nonUniqueIndex) {
     if (nonUniqueIndex.length > 0) {
-      const index = {};
-      _.forEach(nonUniqueIndex, function(i) {
-        index[i.asc || i.desc] = (i.asc ? 1 : -1);
-      });
-      nonUniqueIndexes.push(index);
+      nonUniqueIndexes.push(indexToMongoose(nonUniqueIndex));
     }
   });
   log("translated non unique indexes for %s from %j to %j", name, indexes, nonUniqueIndexes);
@@ -276,10 +281,7 @@ const definitionToMongoose = function(name, tdxSchema) {
   // to support compound indexes, where the order of fields is important.
   //
   // See comment above for index format explanation.
-  const primaryIndex = {};
-  _.forEach(uniqueIndex, function(i) {
-    primaryIndex[i.asc || i.desc] = (i.asc ? 1 : -1);
-  });
+  const primaryIndex = indexToMongoose(uniqueIndex);
   log("translated primary index for %s from %j to %j", name, uniqueIndex, primaryIndex);
 
   //
@@ -310,5 +312,6 @@ export default {
   schemaToTDX: function(mongooseSchema, errList) {
     return schemaToTDX(_.cloneDeep(mongooseSchema), errList);
   },
+  indexToMongoose: indexToMongoose,
   indexToTDX: indexToTDX,
 };
