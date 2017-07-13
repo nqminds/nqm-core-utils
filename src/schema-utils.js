@@ -86,12 +86,46 @@ const schemaToTDX = function(schema, errList) {
     _.forEach(schema, function(value, key) {
       if (key === "__tdxType") {
         // Ensure array type list.
-        schema[key] = [].concat(value);
+        schema.__tdxType = [].concat(value);
+      } else if (key === "type") {
+        // Convert to TDX format.
+        if (typeof value === "string") {
+          // A mongoose-style type specification, e.g. {"name": {"type": "string"}}
+          // A literal type spec - convert to array type spec.
+          schema.__tdxType = [validateTDXType(value, errList)];
+          delete schema.type;
+        } else if (Array.isArray(value)) {
+          // An array type spec.
+          if (value.length) {
+            if (typeof value[0] === "object") {
+              // A type specification for a type named 'type' as an array, groan...
+              // e.g. {type: [{type: "string"}]} - an array of strings
+              schema[key] = schemaToTDX(value, errList);
+            } else {
+              // A mixed mongoose/TDX type specification, e.g. {"name": {"type": ["string", "resourceId", "datasetId"]}}
+              // A TDX-style list of vocab hierarchy => already TDX format, but validate root type
+              validateTDXType(value[0], errList);
+              schema.__tdxType = value;
+              delete schema.type;
+            }
+          } else {
+            // An emtpy array for the 'type' key => assume a 'mixed' mongoose type.
+            schema[key] = [];
+          }
+        } else if (typeof value === "object") {
+          // An object spec => recurse
+          schema[key] = schemaToTDX(value, errList);
+        } else {
+          errList.push(`invalid schema definition, invalid 'type' spec: ${schema}`);
+        }
       } else if (key === "__tdxRequired" || key === "__tdxDefault" || key === "__tdxDescription") {
         // Do nothing.
       } else if (Array.isArray(value)) {
         if (value.length === 1) {
           value[0] = schemaToTDX(value[0], errList);
+        } else if (value.length) {
+          // Multi-value array => a mongoose-style TDX vocab list, e.g. {cost: ["number", "currency"]}
+          schema[key] = {__tdxType: value};
         } else {
           // Assume a 'mixed' mongoose type.
           schema[key] = [];
@@ -99,12 +133,8 @@ const schemaToTDX = function(schema, errList) {
       } else if (typeof value === "object") {
         // Recurse for sub-documents
         schema[key] = schemaToTDX(value, errList);
-      } else if (key === "type" && typeof value === "string") {
-        // A mongoose-style {type: "String"} specification.
-        // Convert to TDX format.
-        schema.__tdxType = [validateTDXType(value, errList)];
-        delete schema.type;
       } else if (typeof value === "string") {
+        // An implied type spec, e.g. {name: "string"} - convert to TDX
         schema[key] = {__tdxType: [validateTDXType(value, errList)]};
       } else {
         errList.push(`invalid schema definition, unexpected: ${schema}`);
@@ -175,8 +205,10 @@ const schemaToMongoose = function(schema, errList, forDisplay) {
         errList.push(`invalid array type specification for key: ${k}`);
       } else if (v.length > 0) {
         if (typeof v[0] === "string") {
+          // Array of single type.
           schema[k] = [{type: validateMongooseType(v[0], errList)}];
         } else {
+          // Array of sub-document spec.
           schema[k] = [schemaToMongoose(v[0], errList, forDisplay)];
         }
       }
