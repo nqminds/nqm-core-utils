@@ -31,21 +31,15 @@ const isNumeric = function(n) {
 
 const makeTDXAccount = function(email, tdx) {
   /*
-    * tdx accounts are stored in email/hostname format, e.g. toby.ealden@gmail.com/tdx.nqminds.com
-    */
+   * tdx accounts are stored in email/hostname format, e.g. toby.ealden@gmail.com/tdx.nqminds.com
+   */
   return `${email}/${tdx}`;
-};
-
-const padNumber = function(n, width, z) {
-  z = z || "0";
-  n = `${n}`;
-  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 };
 
 const splitTDXAccount = function(username) {
   /*
-    * tdx accounts are stored in email/hostname format, e.g. toby.ealden@gmail.com/tdx.nqminds.com
-    */
+   * tdx accounts are stored in email/hostname format, e.g. toby.ealden@gmail.com/tdx.nqminds.com
+   */
   let result;
   const split = username.toLowerCase().split("/");
   if (split.length === 2 && isEmailValid(split[0]) && (isHostNameValid(split[1]) || split[1].indexOf("localhost:") === 0)) {
@@ -55,6 +49,34 @@ const splitTDXAccount = function(username) {
     };
   }
   return result;
+};
+
+const makeTDXResource = function(resource, tdx) {
+  /*
+   * tdx resources are stored in resourceId/hostname format, e.g. DhkDI-du/tdx.nqminds.com
+   */
+  return `${resource.id || resource}/${tdx}`;
+};
+
+const splitTDXResource = function(resourceId) {
+  /*
+   * tdx resources are stored in resourceId/hostname format, e.g. DhkDI-du/tdx.nqminds.com
+   */
+  let result;
+  const split = resourceId.toLowerCase().split("/");
+  if (split.length === 2 && (isHostNameValid(split[1]) || split[1].indexOf("localhost:") === 0)) {
+    result = {
+      resourceId: split[0],
+      tdx: split[1],
+    };
+  }
+  return result;
+};
+
+const padNumber = function(n, width, z) {
+  z = z || "0";
+  n = `${n}`;
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 };
 
 const parseFunction = function(funcText) {
@@ -69,20 +91,22 @@ const parseFunction = function(funcText) {
 };
 
 export {
-  constants,
-  resourceUtils,
-  databotUtils,
-  schemaUtils,
-  flattenJSON,
   buildDataKey,
+  constants,
+  databotUtils,
+  flattenJSON,
+  generate as shortId,
   isEmailValid,
   isDateValid,
   isHostNameValid,
   isNumeric,
   makeTDXAccount,
+  makeTDXResource,
   padNumber,
-  generate as shortId,
-  splitTDXAccount,
   parseFunction,
+  resourceUtils,
+  schemaUtils,
+  splitTDXAccount,
+  splitTDXResource,
   unique as shortHash,
 };
