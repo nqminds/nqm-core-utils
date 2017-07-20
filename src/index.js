@@ -51,11 +51,22 @@ const splitTDXAccount = function(username) {
   return result;
 };
 
+/**
+ * TDX resources are stored in resourceId/hostname format, e.g. DhkDI-du/tdx.nqminds.com
+ *
+ * If a resource object is given, the tdx parameter isn't necessary as it will be inferred
+ * from the resource owner.
+ *
+ * @param  {object|string} resource - the resource id or object
+ * @param  {object} [tdx] - optional tdx id
+ */
 const makeTDXResource = function(resource, tdx) {
-  /*
-   * tdx resources are stored in resourceId/hostname format, e.g. DhkDI-du/tdx.nqminds.com
-   */
-  return `${resource.id || resource}/${tdx}`;
+  if (typeof resource === "object") {
+    const ownerAccount = splitTDXAccount(resource.owner);
+    return `${resource.id}/${ownerAccount.tdx}`;
+  } else {
+    return `${resource}/${tdx}`;
+  }
 };
 
 const splitTDXResource = function(resourceId) {
