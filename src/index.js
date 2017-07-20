@@ -35,13 +35,17 @@ const makeTDXAccount = function(email, tdx) {
    */
   return `${email}/${tdx}`;
 };
-
-const splitTDXAccount = function(username) {
-  /*
-   * tdx accounts are stored in email/hostname format, e.g. toby.ealden@gmail.com/tdx.nqminds.com
-   */
+/**
+ * TDX accounts are stored in email/hostname format, e.g. toby.ealden@gmail.com/tdx.nqminds.com
+ * @param  {string|object} account - the account to split, can be account object or just the username string.
+ */
+const splitTDXAccount = function(account) {
+  // Normalise to account username.
+  if (account.username) {
+    account = account.username;
+  }
   let result;
-  const split = username.toLowerCase().split("/");
+  const split = account.toLowerCase().split("/");
   if (split.length === 2 && isEmailValid(split[0]) && (isHostNameValid(split[1]) || split[1].indexOf("localhost:") === 0)) {
     result = {
       email: split[0],
