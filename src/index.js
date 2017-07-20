@@ -69,18 +69,37 @@ const makeTDXResource = function(resource, tdx) {
   }
 };
 
+/**
+ * Splits a resource identifier into component parts - local id and tdx id.
+ *
+ * TDX resources are stored in resourceId/hostname format, e.g. DhkDI-du/tdx.nqminds.com, but they
+ * often omit the hostname portion, which indicates a resource local to the current tdx.
+ *
+ * @param  {string} resourceId
+ */
 const splitTDXResource = function(resourceId) {
   /*
-   * tdx resources are stored in resourceId/hostname format, e.g. DhkDI-du/tdx.nqminds.com
    */
   let result;
   const split = resourceId.toLowerCase().split("/");
-  if (split.length === 2 && (isHostNameValid(split[1]) || split[1].indexOf("localhost:") === 0)) {
+  if (split.length === 2) {
+    if (isHostNameValid(split[1]) || split[1].indexOf("localhost:") === 0) {
+      result = {
+        resourceId: split[0],
+        tdx: split[1],
+      };
+    } else {
+      // Hostname invalid - do nothing and return 'undefined'.
+    }
+  } else if (split.length === 1) {
+    // Assume a local resource - leave the tdx component empty
     result = {
       resourceId: split[0],
-      tdx: split[1],
     };
+  } else {
+    // Invalid number of components - do nothing and return 'undefined'
   }
+
   return result;
 };
 
