@@ -178,6 +178,7 @@ export default {
   databotInstanceFolderName: "databot instances",
 
   // Application data ownership modes
+  readOnlyOwnershipMode: "read-only",
   userOwnershipMode: "user",
   appOwnershipMode: "application",
 
