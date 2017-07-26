@@ -129,6 +129,7 @@ export default {
   errorIndexStatus:      "error",
 
   // Authentication services
+  githubAuthService:     "oauth:github",
   googleAuthService:     "oauth:google",
   localAuthService:      "local",
 
