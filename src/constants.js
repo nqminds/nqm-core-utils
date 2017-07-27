@@ -66,6 +66,7 @@ export default {
   tokenAccountType: "token",
   hostAccountType: "host",
   applicationAccountType: "application",
+  userGroupAccountType: "group",
 
   // Default schema resource
   schemasResourceId: "__schemas__",
