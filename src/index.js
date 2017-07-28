@@ -143,6 +143,10 @@ const unCamelCase = function(str) {
     });
 };
 
+const slugify = function(str) {
+  return str.toString().trim().toLowerCase().replace(/ /g, "-").replace(/([^a-zA-Z0-9\._-]+)/, "");
+};
+
 export {
   buildDataKey,
   constants,
@@ -159,6 +163,7 @@ export {
   parseFunction,
   resourceUtils,
   schemaUtils,
+  slugify,
   splitTDXAccount,
   splitTDXResource,
   unCamelCase,
