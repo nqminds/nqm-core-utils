@@ -45,6 +45,7 @@ const reservedFieldNames = [
 //
 const indexToTDX = function(indexFields, errList) {
   const tdxIndex = [];
+  errList = errList || [];
 
   if (Array.isArray(indexFields)) {
     _.forEach(indexFields, function(fieldSpec) {
@@ -169,6 +170,7 @@ const validateMongooseType = function(type, errList) {
   return properType;
 };
 
+// Converts a schema from TDX to mongoose format.
 const schemaToMongoose = function(schema, errList, forDisplay) {
   errList = errList || [];
 
