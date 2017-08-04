@@ -129,18 +129,29 @@ const parseFunction = function(funcText) {
 };
 
 const parseTDXError = function(err) {
+  let parsed;
   if (err && err.name === "TDXApiError") {
-    let parsed;
     try {
       parsed = JSON.parse(err.message);
       parsed.failure = JSON.parse(parsed.failure);
-      return parsed;
     } catch (parseError) {
-      return err;
+      parsed = null;
     }
-  } else {
-    return err;
   }
+
+  if (!parsed) {
+    // Simulate the format of a TDX error.
+    parsed = {
+      from: "exception",
+      code: err.code || "n/a",
+      failure: {
+        code: err.code || "n/a",
+        message: err.message,
+      },
+    };
+  }
+
+  return parsed;
 };
 
 //
