@@ -128,6 +128,21 @@ const parseFunction = function(funcText) {
   return null;
 };
 
+const parseTDXError = function(err) {
+  if (err && err.name === "TDXApiError") {
+    let parsed;
+    try {
+      parsed = JSON.parse(err.message);
+      parsed.failure = JSON.parse(parsed.failure);
+      return parsed;
+    } catch (parseError) {
+      return err;
+    }
+  } else {
+    return err;
+  }
+};
+
 //
 // https://stackoverflow.com/a/6229124
 //
@@ -161,6 +176,7 @@ export {
   makeTDXResource,
   padNumber,
   parseFunction,
+  parseTDXError,
   resourceUtils,
   schemaUtils,
   slugify,
