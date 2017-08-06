@@ -173,12 +173,13 @@ const slugify = function(str) {
   return str.toString().trim().toLowerCase().replace(/ /g, "-").replace(/([^a-zA-Z0-9\._-]+)/, "");
 };
 
+const shortId = () => generate();
+
 export {
   buildDataKey,
   constants,
   databotUtils,
   flattenJSON,
-  generate as shortId,
   isEmailValid,
   isDateValid,
   isHostNameValid,
@@ -190,6 +191,7 @@ export {
   parseTDXError,
   resourceUtils,
   schemaUtils,
+  shortId,
   slugify,
   splitTDXAccount,
   splitTDXResource,
