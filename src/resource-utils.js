@@ -148,6 +148,10 @@ const isApplicationDefinition = function(resource) {
   return isResourceType(resource, constants.applicationDefinitionResourceType);
 };
 
+const isApplicationDefinitionGroup = function(resource) {
+  return isResourceType(resource, constants.applicationDefinitionGroupResourceType);
+};
+
 const isDatabotDefinitionGroup = function(resource) {
   return isResourceType(resource, constants.databotDefinitionGroupResourceType);
 };
@@ -196,6 +200,7 @@ export default {
   getResourceTypeText: getResourceTypeText,
   getShareModeText: getShareModeText,
   isApplicationDefinition,
+  isApplicationDefinitionGroup,
   isDatabotDefinitionGroup,
   isDatabotHostGroup,
   isDataset,
