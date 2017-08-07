@@ -10,11 +10,15 @@ const pureResourceTypes = [
 ];
 
 const isResourceType = function(resource, type) {
+  type = [].concat(type);
   resource = resource || {};
   return (
-    resource.schemaDefinition ?
-    (resource.schemaDefinition.id === type || (resource.schemaDefinition.basedOn && resource.schemaDefinition.basedOn.indexOf(type) >= 0)) :  // eslint-disable-line max-len
-    resource.baseType === type
+    resource.schemaDefinition ? (
+      type.indexOf(resource.schemaDefinition.id) >= 0 ||
+      _.intersection(resource.schemaDefinition.basedOn || [], type).length > 0
+    ) : (
+      type.indexOf(resource.baseType) >= 0
+    )
   );
 };
 
