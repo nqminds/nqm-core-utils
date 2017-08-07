@@ -144,6 +144,43 @@ const isPureResource = function(baseType) {
   return pureResourceTypes.indexOf(baseType) >= 0;
 };
 
+const isApplicationDefinition = function(resource) {
+  return isResourceType(resource, constants.tdx.applicationDefinitionResourceType);
+};
+
+const isDatabotDefinitionGroup = function(resource) {
+  return isResourceType(resource, constants.databotDefinitionGroupResourceType);
+};
+
+const isDatabotHostGroup = function(resource) {
+  return isResourceType(resource, constants.databotHostGroupResourceType);
+};
+
+const isDataset = function(resource) {
+  return isResourceType(resource, constants.tdx.datasetResourceType);
+};
+
+const isDatasetOrRawFile = function(resource) {
+  const datasetOrRaw = [constants.tdx.datasetResourceType, constants.tdx.rawFileResourceType];
+  return isResourceType(resource, datasetOrRaw);
+};
+
+const isGeoJSON = function(resource) {
+  return isResourceType(resource, constants.tdx.geojsonResourceType);
+};
+
+const isResourceRootGroup = function(resource) {
+  return isResourceType(resource, constants.resourceRootGroupResourceType);
+};
+
+const isSchema = function(resource) {
+  return isResourceType(resource, constants.tdx.schemaResourceType);
+};
+
+const isVocabulary = function(resource) {
+  return isResourceType(resource, constants.tdx.vocabularyResourceType);
+};
+
 const specialFolderId = function(prefix, accountId) {
   return shortHash.unique(prefix + accountId);
 };
@@ -158,8 +195,17 @@ export default {
   getResourceRootId: getResourceRootId,
   getResourceTypeText: getResourceTypeText,
   getShareModeText: getShareModeText,
-  isPureResource: isPureResource,
-  isResourceType: isResourceType,
+  isApplicationDefinition,
+  isDatabotDefinitionGroup,
+  isDatabotHostGroup,
+  isDataset,
+  isDatasetOrRawFile,
+  isGeoJSON,
+  isPureResource,
+  isResourceRootGroup,
+  isResourceType,
+  isSchema,
+  isVocabulary,
   primaryKeyFromFlattened: primaryKeyFromFlattened,
   specialFolderId: specialFolderId,
 };
