@@ -181,6 +181,10 @@ const isSchema = function(resource) {
   return isResourceType(resource, constants.schemaResourceType);
 };
 
+const isScratchGroup = function(resource) {
+  return isResourceType(resource, constants.scratchGroupResourceType);
+};
+
 const isVocabulary = function(resource) {
   return isResourceType(resource, constants.vocabularyResourceType);
 };
@@ -210,6 +214,7 @@ export default {
   isResourceRootGroup,
   isResourceType,
   isSchema,
+  isScratchGroup,
   isVocabulary,
   primaryKeyFromFlattened: primaryKeyFromFlattened,
   specialFolderId: specialFolderId,
