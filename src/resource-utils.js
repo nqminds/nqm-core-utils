@@ -145,7 +145,7 @@ const isPureResource = function(baseType) {
 };
 
 const isApplicationDefinition = function(resource) {
-  return isResourceType(resource, constants.tdx.applicationDefinitionResourceType);
+  return isResourceType(resource, constants.applicationDefinitionResourceType);
 };
 
 const isDatabotDefinitionGroup = function(resource) {
@@ -157,16 +157,16 @@ const isDatabotHostGroup = function(resource) {
 };
 
 const isDataset = function(resource) {
-  return isResourceType(resource, constants.tdx.datasetResourceType);
+  return isResourceType(resource, constants.datasetResourceType);
 };
 
 const isDatasetOrRawFile = function(resource) {
-  const datasetOrRaw = [constants.tdx.datasetResourceType, constants.tdx.rawFileResourceType];
+  const datasetOrRaw = [constants.datasetResourceType, constants.rawFileResourceType];
   return isResourceType(resource, datasetOrRaw);
 };
 
 const isGeoJSON = function(resource) {
-  return isResourceType(resource, constants.tdx.geojsonResourceType);
+  return isResourceType(resource, constants.geojsonResourceType);
 };
 
 const isResourceRootGroup = function(resource) {
@@ -174,11 +174,11 @@ const isResourceRootGroup = function(resource) {
 };
 
 const isSchema = function(resource) {
-  return isResourceType(resource, constants.tdx.schemaResourceType);
+  return isResourceType(resource, constants.schemaResourceType);
 };
 
 const isVocabulary = function(resource) {
-  return isResourceType(resource, constants.tdx.vocabularyResourceType);
+  return isResourceType(resource, constants.vocabularyResourceType);
 };
 
 const specialFolderId = function(prefix, accountId) {
