@@ -168,7 +168,7 @@ export default {
   applicationServerFolderName: "application servers",
 
   applicationDataFolderPrefix: "ad.",
-  applicationDataFolderName: "application data",
+  applicationDataFolderName: "authorised applications",
 
   // For application-specific folders where app servers can store data.
   // Created as sub-folders of applicationServerFolderPrefix.

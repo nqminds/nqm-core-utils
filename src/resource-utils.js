@@ -152,6 +152,10 @@ const isPureResource = function(baseType) {
   return pureResourceTypes.indexOf(baseType) >= 0;
 };
 
+const isAccountSet = function(resource) {
+  return isResourceType(resource, constants.accountSetResourceType);
+};
+
 const isAccountSetRootGroup = function(resource) {
   return isResourceType(resource, constants.accountSetRootGroupResourceType);
 };
@@ -241,6 +245,7 @@ export default {
   getResourceRootId: getResourceRootId,
   getResourceTypeText: getResourceTypeText,
   getShareModeText: getShareModeText,
+  isAccountSet,
   isAccountSetGroup,
   isAccountSetRootGroup,
   isApplicationDefinition,
