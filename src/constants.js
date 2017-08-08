@@ -33,6 +33,7 @@ export default {
   databotBaseType:                        "databot",                   // base of all things 'databot'
   databotDefinitionResourceType:          "databotDefinition",         // a databot definition
   databotHostResourceType:                "databotHost",               // system resources that mirror hostAccountType accounts to enable sharing
+  accountSetBaseType:                     "accountSetBase",
   accountSetResourceType:                 "accountSet",
 
   resourceRootGroupResourceType:          "resourceRootGroup",         // folder for all 'pure' resources (non-databot or application)
@@ -153,6 +154,9 @@ export default {
 
   resourceRootFolderPrefix: "rs.",
   resourceRootFolderName: "resources",
+
+  accountSetRootFolderPrefix: "ug.",
+  accountSetRootFolderName: "user groups",
 
   applicationRootFolderPrefix: "a.",
   applicationRootFolderName: "applications",

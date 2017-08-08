@@ -117,6 +117,11 @@ const getDatabotRootId = function(accountId) {
   return specialFolderId(constants.databotRootFolderPrefix, accountId);
 };
 
+// Folder containing all account set specific data for the user.
+const getAccountSetRootId = function(accountId) {
+  return specialFolderId(constants.accountSetRootFolderPrefix, accountId);
+};
+
 //
 // Gets the default parent for a given resource type.
 // This is used when a resource is created with no parent specified.
@@ -133,6 +138,9 @@ const getDefaultResourceParent = function(accountId, baseType) {
     case constants.databotBaseType:
       rootId = getDatabotRootId(accountId);
       break;
+    case constants.accountSetBaseType:
+      rootId = getAccountSetRootId(accountId);
+      break;
     default:
       // Do nothing
       break;
@@ -142,6 +150,10 @@ const getDefaultResourceParent = function(accountId, baseType) {
 
 const isPureResource = function(baseType) {
   return pureResourceTypes.indexOf(baseType) >= 0;
+};
+
+const isAccountSetRootGroup = function(resource) {
+  return isResourceType(resource, constants.accountSetRootGroupResourceType);
 };
 
 const isAccountSetGroup = function(resource) {
@@ -220,6 +232,7 @@ const specialFolderId = function(prefix, accountId) {
 
 export default {
   getAccountRootId: getAccountRootId,
+  getAccountSetRootId,
   getApplicationRootId: getApplicationRootId,
   getDatabotRootId: getDatabotRootId,
   getApplicationDataId: getApplicationDataId,
@@ -229,6 +242,7 @@ export default {
   getResourceTypeText: getResourceTypeText,
   getShareModeText: getShareModeText,
   isAccountSetGroup,
+  isAccountSetRootGroup,
   isApplicationDefinition,
   isApplicationDefinitionGroup,
   isDatabotDefinitionGroup,
