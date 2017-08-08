@@ -220,13 +220,31 @@ const isPlainResourceGroup = (folder) => {
   );
 };
 
-const isReservedFolder = (folder) => {
+const isReadOnlyGroup = (folder) => {
+  //
+  // Read-only groups => resources can not be created in folders of the following type.
+  //
   return (
-    isResourceType(folder, constants.rootGroupResourceType) ||
     isResourceType(folder, constants.applicationRootGroupResourceType) ||
     isResourceType(folder, constants.databotRootGroupResourceType) ||
     isResourceType(folder, constants.databotInstanceGroupResourceType) ||
-    isResourceType(folder, constants.accountSetRootGroupResourceType)
+    isResourceType(folder, constants.rootGroupResourceType)
+  );
+};
+
+const isReservedGroup = (folder) => {
+  //
+  // Reserved groups => resources can not be created with the following types.
+  //
+  return (
+    isResourceType(folder, constants.accountSetRootGroupResourceType) ||
+    isResourceType(folder, constants.applicationRootGroupResourceType) ||
+    isResourceType(folder, constants.applicationDataGroupResourceType) ||
+    isResourceType(folder, constants.applicationServerGroupResourceType) ||
+    isResourceType(folder, constants.databotRootGroupResourceType) ||
+    isResourceType(folder, constants.databotInstanceGroupResourceType) ||
+    isResourceType(folder, constants.resourceRootGroupResourceType) ||
+    isResourceType(folder, constants.rootGroupResourceType)
   );
 };
 
@@ -257,7 +275,8 @@ export default {
   isGeoJSON,
   isPlainResourceGroup,
   isPureResource,
-  isReservedFolder,
+  isReadOnlyGroup,
+  isReservedGroup,
   isResourceRootGroup,
   isResourceType,
   isSchema,
