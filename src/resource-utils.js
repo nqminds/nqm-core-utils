@@ -189,6 +189,26 @@ const isVocabulary = function(resource) {
   return isResourceType(resource, constants.vocabularyResourceType);
 };
 
+const isPlainResourceGroup = (folder) => {
+  // Determine if the folder is a simple groupResourceType (no sub-class)
+  return (
+    folder &&
+    _.isEqual(
+      folder.schemaDefinition.basedOn,
+      [constants.groupResourceType])
+  );
+};
+
+const isReservedFolder = (folder) => {
+  return (
+    isResourceType(folder, constants.rootGroupResourceType) ||
+    isResourceType(folder, constants.applicationRootGroupResourceType) ||
+    isResourceType(folder, constants.databotRootGroupResourceType) ||
+    isResourceType(folder, constants.databotInstanceGroupResourceType) ||
+    isResourceType(folder, constants.userGroupRootGroupResourceType)
+  );
+};
+
 const specialFolderId = function(prefix, accountId) {
   return shortHash.unique(prefix + accountId);
 };
@@ -210,7 +230,9 @@ export default {
   isDataset,
   isDatasetOrRawFile,
   isGeoJSON,
+  isPlainResourceGroup,
   isPureResource,
+  isReservedFolder,
   isResourceRootGroup,
   isResourceType,
   isSchema,

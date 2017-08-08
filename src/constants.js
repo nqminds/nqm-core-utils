@@ -55,6 +55,8 @@ export default {
   applicationServerGroupResourceType:     "applicationServerGroup",
   applicationDataGroupResourceType:       "applicationDataGroup",
 
+  userGroupRootGroupResourceType:         "userGroupRootGroup",
+
   // databot management resources
   databotInstancesResourceType:           "databotInstances",          // system resource storing details of running databot instances
   databotInstanceOutputResourceType:      "databotInstanceOutput",     // system resource storing databot instance output
