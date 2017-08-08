@@ -144,6 +144,10 @@ const isPureResource = function(baseType) {
   return pureResourceTypes.indexOf(baseType) >= 0;
 };
 
+const isAccountSetGroup = function(resource) {
+  return isResourceType(resource, constants.accountSetGroupResourceType);
+};
+
 const isApplicationDefinition = function(resource) {
   return isResourceType(resource, constants.applicationDefinitionResourceType);
 };
@@ -193,8 +197,9 @@ const isPlainResourceGroup = (folder) => {
   // Determine if the folder is a simple groupResourceType (no sub-class)
   return (
     folder &&
+    folder.schemaDefinition &&
     _.isEqual(
-      folder.schemaDefinition.basedOn,
+      folder.schemaDefinition.basedOn || [],
       [constants.groupResourceType])
   );
 };
@@ -205,7 +210,7 @@ const isReservedFolder = (folder) => {
     isResourceType(folder, constants.applicationRootGroupResourceType) ||
     isResourceType(folder, constants.databotRootGroupResourceType) ||
     isResourceType(folder, constants.databotInstanceGroupResourceType) ||
-    isResourceType(folder, constants.userGroupRootGroupResourceType)
+    isResourceType(folder, constants.accountSetRootGroupResourceType)
   );
 };
 
@@ -223,6 +228,7 @@ export default {
   getResourceRootId: getResourceRootId,
   getResourceTypeText: getResourceTypeText,
   getShareModeText: getShareModeText,
+  isAccountSetGroup,
   isApplicationDefinition,
   isApplicationDefinitionGroup,
   isDatabotDefinitionGroup,

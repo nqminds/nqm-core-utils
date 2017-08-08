@@ -33,6 +33,7 @@ export default {
   databotBaseType:                        "databot",                   // base of all things 'databot'
   databotDefinitionResourceType:          "databotDefinition",         // a databot definition
   databotHostResourceType:                "databotHost",               // system resources that mirror hostAccountType accounts to enable sharing
+  accountSetResourceType:                 "accountSet",
 
   resourceRootGroupResourceType:          "resourceRootGroup",         // folder for all 'pure' resources (non-databot or application)
   scratchGroupResourceType:               "scratchGroup",
@@ -55,7 +56,8 @@ export default {
   applicationServerGroupResourceType:     "applicationServerGroup",
   applicationDataGroupResourceType:       "applicationDataGroup",
 
-  userGroupRootGroupResourceType:         "userGroupRootGroup",
+  accountSetRootGroupResourceType:        "accountSetRootGroup",
+  accountSetGroupResourceType:            "accountSetGroup",
 
   // databot management resources
   databotInstancesResourceType:           "databotInstances",          // system resource storing details of running databot instances
@@ -68,7 +70,7 @@ export default {
   tokenAccountType: "token",
   hostAccountType: "host",
   applicationAccountType: "application",
-  userGroupAccountType: "group",
+  accountSetAccountType: "accountSet",
 
   // Default schema resource
   schemasResourceId: "__schemas__",
