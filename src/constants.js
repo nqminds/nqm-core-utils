@@ -50,6 +50,7 @@ export default {
   databotDefinitionGroupResourceType:     "databotGroup",
   databotHostGroupResourceType:           "databotHostGroup",
   databotInstanceGroupResourceType:       "databotInstanceGroup",
+  databotActiveHostGroupResourceType:     "databotActiveHostGroup",
   databotControllerResourceType:          "databotController",
 
   applicationRootGroupResourceType:       "applicationRootGroup",
@@ -186,6 +187,9 @@ export default {
 
   databotInstanceFolderPrefix: "dbi.",
   databotInstanceFolderName: "databot instances",
+
+  databotActiveHostFolderPrefix: "dah.",
+  databotActiveHostFolderName: "active databot hosts",
 
   // Application data ownership modes
   readOnlyOwnershipMode: "read-only",
