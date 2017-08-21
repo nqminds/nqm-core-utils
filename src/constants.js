@@ -109,6 +109,10 @@ export default {
   alwaysDatabotInstanceRunMode:    "run-always",
   scheduledDatabotInstanceRunMode: "scheduled",
 
+  pauseDatabotInstance: "pause",
+  resumeDatabotInstance: "resume",
+  stopDatabotInstance: "stop",
+
   // Privileged databots
   datasetImportDatabot:     "__datasetImport__",
   datasetCopyDatabot:       "__datasetCopy__",
