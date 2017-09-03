@@ -34,8 +34,13 @@ const reservedFieldNames = [
   // hooks.js
   "_pres",
   "_posts",
+  "__update",         // <---- TDX specific
 ];
 
+const vocabTypeLookup = function(vocab, id) {
+  const vocabDefinition = _.find(vocab, (v) => v.id === id);
+  return vocabDefinition && vocabDefinition.basedOn[0];
+}
 // Convert from simple array list to TDX index format.
 // Assume ascending sort direction.
 // e.g. ["id", "code"] => [{asc: "id"}, {asc: "code"}]
@@ -79,8 +84,9 @@ const indexToMongoose = function(index) {
   return mongooseIndex;
 };
 
-const validateTDXType = function(type, errList) {
+const validateTDXType = function(vocab, type, errList) {
   let properType;
+  type = vocabTypeLookup(vocab, type) || type;
   type = type.toLowerCase();
   if (!constants.mongooseTypes[type]) {
     errList.push(`invalid base type: ${type}`);
@@ -90,8 +96,13 @@ const validateTDXType = function(type, errList) {
   return properType;
 };
 
-// Converts a schema from mongoose to TDX format.
-const schemaToTDX = function(schema, errList) {
+/**
+ * Converts a schema from mongoose to TDX format.
+ * n.b. recursive
+ * @param  {} schema
+ * @param  {} errList
+ */
+const schemaToTDX = function(vocab, schema, errList) {
   if (typeof schema === "object") {
     _.forEach(schema, function(value, key) {
       if (key === "__tdxType") {
@@ -101,8 +112,8 @@ const schemaToTDX = function(schema, errList) {
         // Convert to TDX format.
         if (typeof value === "string") {
           // A mongoose-style type specification, e.g. {"name": {"type": "string"}}
-          // A literal type spec - convert to array type spec.
-          schema.__tdxType = [validateTDXType(value, errList)];
+          // Convert to array type spec.
+          schema.__tdxType = [validateTDXType(vocab, value, errList)];
           delete schema.type;
         } else if (Array.isArray(value)) {
           // An array type spec.
@@ -110,11 +121,11 @@ const schemaToTDX = function(schema, errList) {
             if (typeof value[0] === "object") {
               // A type specification for a type named 'type' as an array, groan...
               // e.g. {type: [{type: "string"}]} - an array of strings
-              schema[key] = schemaToTDX(value, errList);
+              schema[key] = schemaToTDX(vocab, value, errList);
             } else {
               // A mixed mongoose/TDX type specification, e.g. {"name": {"type": ["string", "resourceId", "datasetId"]}}
               // A TDX-style list of vocab hierarchy => already TDX format, but validate root type
-              validateTDXType(value[0], errList);
+              validateTDXType(vocab, value[0], errList);
               schema.__tdxType = value;
               delete schema.type;
             }
@@ -124,7 +135,7 @@ const schemaToTDX = function(schema, errList) {
           }
         } else if (typeof value === "object") {
           // An object spec => recurse
-          schema[key] = schemaToTDX(value, errList);
+          schema[key] = schemaToTDX(vocab, value, errList);
         } else {
           errList.push(`invalid schema definition, invalid 'type' spec: ${schema}`);
         }
@@ -132,7 +143,7 @@ const schemaToTDX = function(schema, errList) {
         // Do nothing.
       } else if (Array.isArray(value)) {
         if (value.length === 1) {
-          value[0] = schemaToTDX(value[0], errList);
+          value[0] = schemaToTDX(vocab, value[0], errList);
         } else if (value.length) {
           // Multi-value array => a mongoose-style TDX vocab list, e.g. {cost: ["number", "currency"]}
           schema[key] = {__tdxType: value};
@@ -142,10 +153,10 @@ const schemaToTDX = function(schema, errList) {
         }
       } else if (typeof value === "object") {
         // Recurse for sub-documents
-        schema[key] = schemaToTDX(value, errList);
+        schema[key] = schemaToTDX(vocab, value, errList);
       } else if (typeof value === "string") {
         // An implied type spec, e.g. {name: "string"} - convert to TDX
-        schema[key] = {__tdxType: [validateTDXType(value, errList)]};
+        schema[key] = {__tdxType: [validateTDXType(vocab, value, errList)]};
       } else {
         errList.push(`invalid schema definition, unexpected: ${schema}`);
       }
@@ -153,14 +164,15 @@ const schemaToTDX = function(schema, errList) {
 
     return schema;
   } else if (typeof schema === "string") {
-    return {__tdxType: [validateTDXType(schema, errList)]};
+    return {__tdxType: [validateTDXType(vocab, schema, errList)]};
   } else {
     errList.push(`invalid schema definition, unexpected: ${schema}`);
   }
 };
 
-const validateMongooseType = function(type, errList) {
+const validateMongooseType = function(vocab, type, errList) {
   let properType;
+  type = vocabTypeLookup(vocab, type) || type;
   type = type.toLowerCase();
   if (!constants.mongooseTypes[type]) {
     errList.push(`invalid base type: ${type}`);
@@ -171,7 +183,7 @@ const validateMongooseType = function(type, errList) {
 };
 
 // Converts a schema from TDX to mongoose format.
-const schemaToMongoose = function(schema, errList, forDisplay) {
+const schemaToMongoose = function(vocab, schema, errList, forDisplay) {
   errList = errList || [];
 
   _.each(schema, function(v, k) {
@@ -207,7 +219,7 @@ const schemaToMongoose = function(schema, errList, forDisplay) {
         } else if (schema.type === "array") {
           schema = [];
         } else {
-          schema.type = validateMongooseType(schema.type, errList);
+          schema.type = validateMongooseType(vocab, schema.type, errList);
         }
       }
     } else if (Array.isArray(v)) {
@@ -217,15 +229,15 @@ const schemaToMongoose = function(schema, errList, forDisplay) {
       } else if (v.length > 0) {
         if (typeof v[0] === "string") {
           // Array of single type.
-          schema[k] = [{type: validateMongooseType(v[0], errList)}];
+          schema[k] = [{type: validateMongooseType(vocab, v[0], errList)}];
         } else {
           // Array of sub-document spec.
-          schema[k] = [schemaToMongoose(v[0], errList, forDisplay)];
+          schema[k] = [schemaToMongoose(vocab, v[0], errList, forDisplay)];
         }
       }
     } else if (typeof v === "object") {
       // Sub-document
-      schema[k] = schemaToMongoose(v, errList, forDisplay);
+      schema[k] = schemaToMongoose(vocab, v, errList, forDisplay);
     } else if (typeof v !== "string") {
       // TODO - review
       // Don't treat this as an error, just ignore.
@@ -234,14 +246,14 @@ const schemaToMongoose = function(schema, errList, forDisplay) {
       errLog(`invalid schema definition - unexpected type for key '${k}' : ${(typeof v)}`);
       delete schema[k];
     } else {
-      schema[k] = {type: validateMongooseType(v, errList)};
+      schema[k] = {type: validateMongooseType(vocab, v, errList)};
     }
   });
 
   return schema;
 };
 
-const definitionToMongoose = function(name, tdxSchema) {
+const definitionToMongoose = function(vocab, name, tdxSchema) {
   const uniqueIndex = tdxSchema.uniqueIndex;
   const indexes = tdxSchema.nonUniqueIndexes;
 
@@ -292,7 +304,7 @@ const definitionToMongoose = function(name, tdxSchema) {
   //
   log("transforming schema for %s: %j", tdxSchema.id, tdxSchema.dataSchema);
   const errList = [];
-  const mongooseSchema = schemaToMongoose(tdxSchema.dataSchema, errList, false);
+  const mongooseSchema = schemaToMongoose(vocab, tdxSchema.dataSchema, errList, false);
   if (errList.length) {
     throw new Error(`invalid mongoose schema: ${errList.join(",")}`);
   }
@@ -308,11 +320,11 @@ const definitionToMongoose = function(name, tdxSchema) {
 
 export default {
   definitionToMongoose: definitionToMongoose,
-  schemaToMongoose: function(tdxSchema, errList, forDisplay) {
-    return schemaToMongoose(_.cloneDeep(tdxSchema), errList, forDisplay);
+  schemaToMongoose: function(vocab, tdxSchema, errList, forDisplay) {
+    return schemaToMongoose(vocab || [], _.cloneDeep(tdxSchema), errList, forDisplay);
   },
-  schemaToTDX: function(mongooseSchema, errList) {
-    return schemaToTDX(_.cloneDeep(mongooseSchema), errList);
+  schemaToTDX: function(vocab, mongooseSchema, errList) {
+    return schemaToTDX(vocab || [], _.cloneDeep(mongooseSchema), errList);
   },
   indexToMongoose: indexToMongoose,
   indexToTDX: indexToTDX,

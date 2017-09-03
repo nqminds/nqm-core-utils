@@ -4,6 +4,7 @@ module.exports = (function() {
   const utils = require("../lib/nqm-core-utils");
   const schemaUtils = utils.schemaUtils;
   const assert = require("assert");
+  const vocab = [];
 
   describe("Schema", function() {
     it("converts a simple mongoose schema to TDX", function() {
@@ -11,7 +12,7 @@ module.exports = (function() {
         name: "string",
       };
       const errs = [];
-      const convert = schemaUtils.schemaToTDX(simple, errs);
+      const convert = schemaUtils.schemaToTDX(vocab, simple, errs);
       assert.equal(0, errs.length);
       assert.equal(convert.name.__tdxType[0], "string");
     });
@@ -23,7 +24,7 @@ module.exports = (function() {
         },
       };
       const errs = [];
-      const convert = schemaUtils.schemaToTDX(simple, errs);
+      const convert = schemaUtils.schemaToTDX(vocab, simple, errs);
       assert.equal(0, errs.length);
       assert.equal(convert.name.__tdxType[0], "string");
       assert.equal(convert.value.foo[0].__tdxType[0], "string");
@@ -43,7 +44,7 @@ module.exports = (function() {
         },
       };
       const errs = [];
-      const convert = schemaUtils.schemaToTDX(simple, errs);
+      const convert = schemaUtils.schemaToTDX(vocab, simple, errs);
       assert.equal(0, errs.length);
       assert.equal(convert.name.__tdxType[0], "string");
       assert.equal(convert.value.foo[0].__tdxType[0], "string");
@@ -62,7 +63,7 @@ module.exports = (function() {
         },
       };
       const errs = [];
-      const convert = schemaUtils.schemaToTDX(simple, errs);
+      const convert = schemaUtils.schemaToTDX(vocab, simple, errs);
       assert.equal(0, errs.length);
       assert.equal(convert.type.__tdxType[0], "string");
     });
@@ -73,7 +74,7 @@ module.exports = (function() {
         }],
       };
       const errs = [];
-      const convert = schemaUtils.schemaToTDX(simple, errs);
+      const convert = schemaUtils.schemaToTDX(vocab, simple, errs);
       assert.equal(0, errs.length);
       assert.equal(convert.type[0].__tdxType[0], "string");
     });
@@ -82,7 +83,7 @@ module.exports = (function() {
         type: {__tdxType: "string"},
       };
       const errs = [];
-      const convert = schemaUtils.schemaToTDX(simple, errs);
+      const convert = schemaUtils.schemaToTDX(vocab, simple, errs);
       assert.equal(0, errs.length);
       assert.equal(convert.type.__tdxType[0], "string");
     });
@@ -93,7 +94,7 @@ module.exports = (function() {
         ],
       };
       const errs = [];
-      const convert = schemaUtils.schemaToTDX(simple, errs);
+      const convert = schemaUtils.schemaToTDX(vocab, simple, errs);
       assert.equal(0, errs.length);
       assert.equal(convert.type[0].__tdxType[0], "string");
     });

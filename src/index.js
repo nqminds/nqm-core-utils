@@ -61,12 +61,12 @@ const splitTDXAccount = function(account) {
  * @param  {object|string} resource - the resource id or object
  * @param  {string} [tdx] - optional tdx id
  */
-const makeTDXResource = function(resource, tdx) {
+const makeTDXResourceId = function(resource, tdx) {
   // Can handle resource as string or id.
   if (typeof resource === "object") {
     resource = resource.id;
   }
-  if (splitTDXResource(resource).tdx) {
+  if (splitTDXResourceId(resource).tdx) {
     // The resource id is already fully qualified
     return resource;
   } else if (!resource || !tdx) {
@@ -85,7 +85,7 @@ const makeTDXResource = function(resource, tdx) {
  *
  * @param  {string} resourceId
  */
-const splitTDXResource = function(resourceId) {
+const splitTDXResourceId = function(resourceId) {
   /*
    */
   let result;
@@ -103,6 +103,37 @@ const splitTDXResource = function(resourceId) {
     // Assume a local resource - leave the tdx component empty
     result = {
       resourceId: split[0],
+    };
+  } else {
+    // Invalid number of components - do nothing and return 'undefined'
+  }
+
+  return result;
+};
+
+/**
+ * Splits a schema identifier into component parts - schema id and library id.
+ *
+ * TDX schema ids are stored in schemaId/libraryId format, e.g. mySuperBespokeSchema/DFHJG_Dk, but they
+ * often omit the library portion, which indicates a schema from the system library.
+ *
+ * @param  {string} schemaId
+ */
+const splitTDXSchemaId = function(schemaId) {
+  /*
+   */
+  let result;
+  const split = schemaId.split("/");
+  if (split.length === 2) {
+    result = {
+      id: split[0],
+      libraryId: split[1],
+    };
+  } else if (split.length === 1) {
+    // Assume a local schema - leave the tdx component empty
+    result = {
+      id: split[0],
+      libraryId: constants.schemasResourceId,
     };
   } else {
     // Invalid number of components - do nothing and return 'undefined'
@@ -154,11 +185,13 @@ const parseTDXError = function(err) {
   return parsed;
 };
 
-//
-// https://stackoverflow.com/a/6229124
-//
-const unCamelCase = function(str) {
-  return str
+/**
+ * Removes camel casing by inserting spaces at word breaks.
+ * See https://stackoverflow.com/a/6229124.
+ * @param  {string} inp
+ */
+const unCamelCase = function(inp) {
+  return inp
     // insert a space between lower & upper
     .replace(/([a-z])([A-Z])/g, "$1 $2")
     // space before last upper in a sequence followed by lower
@@ -169,8 +202,12 @@ const unCamelCase = function(str) {
     });
 };
 
-const slugify = function(str) {
-  return str.toString().trim().toLowerCase().replace(/ /g, "-").replace(/([^a-zA-Z0-9\._-]+)/, "");
+/**
+ * Creates a slugified version of the given input, e.g. "The quick brown fox" => "the-quick-brown-fox".
+ * @param  {string} inp
+ */
+const slugify = function(inp) {
+  return inp.toString().trim().toLowerCase().replace(/ /g, "-").replace(/([^a-zA-Z0-9\._-]+)/, "");
 };
 
 const shortId = () => generate();
@@ -185,7 +222,7 @@ export {
   isHostNameValid,
   isNumeric,
   makeTDXAccount,
-  makeTDXResource,
+  makeTDXResourceId,
   padNumber,
   parseFunction,
   parseTDXError,
@@ -194,7 +231,8 @@ export {
   shortId,
   slugify,
   splitTDXAccount,
-  splitTDXResource,
+  splitTDXResourceId,
+  splitTDXSchemaId,
   unCamelCase,
   unique as shortHash,
 };
