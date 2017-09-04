@@ -37,9 +37,14 @@ const reservedFieldNames = [
   "__update",         // <---- TDX specific
 ];
 
-const vocabTypeLookup = function(vocab, id) {
+const vocabTypeLookupMongoose = function(vocab, id) {
   const vocabDefinition = _.find(vocab, (v) => v.id === id);
   return vocabDefinition && vocabDefinition.basedOn[0];
+};
+
+const vocabTypeLookupTDX = function(vocab, id) {
+  const vocabDefinition = _.find(vocab, (v) => v.id === id);
+  return vocabDefinition && vocabDefinition.basedOn.concat(vocabDefinition.id);
 };
 
 // Convert from simple array list to TDX index format.
@@ -86,14 +91,16 @@ const indexToMongoose = function(index) {
 };
 
 const validateTDXType = function(vocab, type, errList) {
-  let properType;
-  type = vocabTypeLookup(vocab, type) || type;
-  type = type.toLowerCase();
-  if (!constants.mongooseTypes[type]) {
-    errList.push(`invalid base type: ${type}`);
-  } else {
-    properType = type;
+  let properType = vocabTypeLookupTDX(vocab, type);
+  if (!properType) {
+    type = type.toLowerCase();
+    if (!constants.mongooseTypes[type]) {
+      errList.push(`invalid base type: ${type}`);
+    } else {
+      properType = [type];
+    }
   }
+
   return properType;
 };
 
@@ -114,7 +121,7 @@ const schemaToTDX = function(vocab, schema, errList) {
         if (typeof value === "string") {
           // A mongoose-style type specification, e.g. {"name": {"type": "string"}}
           // Convert to array type spec.
-          schema.__tdxType = [validateTDXType(vocab, value, errList)];
+          schema.__tdxType = validateTDXType(vocab, value, errList);
           delete schema.type;
         } else if (Array.isArray(value)) {
           // An array type spec.
@@ -157,7 +164,7 @@ const schemaToTDX = function(vocab, schema, errList) {
         schema[key] = schemaToTDX(vocab, value, errList);
       } else if (typeof value === "string") {
         // An implied type spec, e.g. {name: "string"} - convert to TDX
-        schema[key] = {__tdxType: [validateTDXType(vocab, value, errList)]};
+        schema[key] = {__tdxType: validateTDXType(vocab, value, errList)};
       } else {
         errList.push(`invalid schema definition, unexpected: ${schema}`);
       }
@@ -165,7 +172,7 @@ const schemaToTDX = function(vocab, schema, errList) {
 
     return schema;
   } else if (typeof schema === "string") {
-    return {__tdxType: [validateTDXType(vocab, schema, errList)]};
+    return {__tdxType: validateTDXType(vocab, schema, errList)};
   } else {
     errList.push(`invalid schema definition, unexpected: ${schema}`);
   }
@@ -173,7 +180,7 @@ const schemaToTDX = function(vocab, schema, errList) {
 
 const validateMongooseType = function(vocab, type, errList) {
   let properType;
-  type = vocabTypeLookup(vocab, type) || type;
+  type = vocabTypeLookupMongoose(vocab, type) || type;
   type = type.toLowerCase();
   if (!constants.mongooseTypes[type]) {
     errList.push(`invalid base type: ${type}`);
