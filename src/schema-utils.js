@@ -261,7 +261,7 @@ const schemaToMongoose = function(vocab, schema, errList, forDisplay) {
   return schema;
 };
 
-const definitionToMongoose = function(vocab, name, tdxSchema) {
+const definitionToMongoose = function(name, tdxSchema) {
   const uniqueIndex = tdxSchema.uniqueIndex;
   const indexes = tdxSchema.nonUniqueIndexes;
 
@@ -312,7 +312,7 @@ const definitionToMongoose = function(vocab, name, tdxSchema) {
   //
   log("transforming schema for %s: %j", tdxSchema.id, tdxSchema.dataSchema);
   const errList = [];
-  const mongooseSchema = schemaToMongoose(vocab, tdxSchema.dataSchema, errList, false);
+  const mongooseSchema = schemaToMongoose(null, tdxSchema.dataSchema, errList, false);
   if (errList.length) {
     throw new Error(`invalid mongoose schema: ${errList.join(",")}`);
   }
