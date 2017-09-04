@@ -40,7 +40,8 @@ const reservedFieldNames = [
 const vocabTypeLookup = function(vocab, id) {
   const vocabDefinition = _.find(vocab, (v) => v.id === id);
   return vocabDefinition && vocabDefinition.basedOn[0];
-}
+};
+
 // Convert from simple array list to TDX index format.
 // Assume ascending sort direction.
 // e.g. ["id", "code"] => [{asc: "id"}, {asc: "code"}]
