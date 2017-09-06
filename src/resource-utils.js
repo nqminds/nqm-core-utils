@@ -189,6 +189,10 @@ const isDatasetOrRawFile = function(resource) {
   return isResourceType(resource, datasetOrRaw);
 };
 
+const isDatasetFilter = function(resource) {
+  return isResourceType(resource, constants.datasetFilterResourceType);
+};
+
 const isGeoJSON = function(resource) {
   return isResourceType(resource, constants.geojsonResourceType);
 };
@@ -272,6 +276,7 @@ export default {
   isDatabotHostGroup,
   isDataset,
   isDatasetOrRawFile,
+  isDatasetFilter,
   isGeoJSON,
   isPlainResourceGroup,
   isPureResource,
