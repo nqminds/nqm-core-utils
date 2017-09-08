@@ -40,6 +40,10 @@ const makeTDXAccount = function(email, tdx) {
  * @param  {string|object} account - the account to split, can be account object or just the username string.
  */
 const splitTDXAccount = function(account) {
+  if (!account) {
+    return;
+  }
+
   // Normalise to account username.
   if (account.username) {
     account = account.username;
@@ -52,6 +56,7 @@ const splitTDXAccount = function(account) {
       tdx: split[1],
     };
   }
+
   return result;
 };
 
