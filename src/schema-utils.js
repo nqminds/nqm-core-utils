@@ -3,8 +3,8 @@ import debug from "debug";
 import _ from "lodash";
 import constants from "./constants";
 
-const log = debug("nqm-core-utils:build-data-key");
-const errLog = debug("nqm-core-utils:build-data-key:error");
+const log = debug("nqm-core-utils:schema-utils");
+const errLog = debug("nqm-core-utils:schema-utils:error");
 
 // From mongoose/lib/schema.js
 const reservedFieldNames = [
