@@ -180,6 +180,15 @@ const isDatabotHostGroup = function(resource) {
   return isResourceType(resource, constants.databotHostGroupResourceType);
 };
 
+const isDatabotSystemResource = function(resource) {
+  return (
+    isResourceType(resource, constants.databotInstancesResourceType) ||
+    isResourceType(resource, constants.databotProcessesResourceType) ||
+    isResourceType(resource, constants.activeDatabotHostsResourceType) ||
+    isResourceType(resource, constants.databotInstanceOutputResourceType)
+  );
+};
+
 const isDataset = function(resource) {
   return isResourceType(resource, constants.datasetResourceType);
 };
@@ -274,6 +283,7 @@ export default {
   isApplicationDefinitionGroup,
   isDatabotDefinitionGroup,
   isDatabotHostGroup,
+  isDatabotSystemResource,
   isDataset,
   isDatasetOrRawFile,
   isDatasetFilter,
