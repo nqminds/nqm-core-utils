@@ -81,11 +81,11 @@ export default {
   vocabularyResourceId: "__vocab__",
 
   // Databot stuff.
-  npmDatabotType: "npm",
+  npmDatabotType:    "npm",
   inlineDatabotType: "script",
-  zipDatabotType: "zip",
+  zipDatabotType:    "zip",
   githubDatabotType: "github",
-  urlDatabotType: "url",
+  urlDatabotType:    "url",
 
   browserHostType: "browser",
   serverHostType:  "server",
@@ -109,9 +109,9 @@ export default {
   alwaysDatabotInstanceRunMode:    "run-always",
   scheduledDatabotInstanceRunMode: "scheduled",
 
-  pauseDatabotInstance: "pause",
+  pauseDatabotInstance:  "pause",
   resumeDatabotInstance: "resume",
-  stopDatabotInstance: "stop",
+  stopDatabotInstance:   "stop",
 
   // Privileged databots
   datasetImportDatabot:     "__datasetImport__",
